@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM Wiki Handleiding – Beginners</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root{
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #182245;
+      --text: #e8ecff;
+      --muted: #aab4d6;
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c9;
+      --accent-3: #ffb86c;
+      --line: rgba(255,255,255,0.08);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(122,162,255,0.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(126,240,201,0.12), transparent 30%),
+        linear-gradient(180deg, #090d1a 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    .wrap{
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ── Hero ── */
+    .hero{
+      padding: 44px 40px 32px;
+      background: linear-gradient(135deg, rgba(122,162,255,0.12), rgba(126,240,201,0.06));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+
+    .tag{
+      display:inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .tag-blue  { background: rgba(122,162,255,0.15); color: var(--accent); }
+    .tag-green { background: rgba(126,240,201,0.12); color: var(--accent-2); }
+    .tag-orange{ background: rgba(255,184,108,0.12); color: var(--accent-3); }
+
+    h1{
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle{
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    /* ── Content ── */
+    .content{
+      padding: 34px 40px 48px;
+    }
+
+    p{ margin: 0 0 16px; font-size: 1.02rem; }
+    .lead{ font-size: 1.12rem; color: #f0f4ff; }
+
+    /* ── Stap blokken ── */
+    .stap{
+      margin: 36px 0 0;
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+    }
+
+    .stap-header{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stap-nr{
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b1020;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h2{
+      margin: 0;
+      font-size: 1.28rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    h3{
+      margin: 22px 0 10px;
+      font-size: 1.05rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    ul, ol{
+      margin: 0 0 16px 0;
+      padding-left: 1.4rem;
+    }
+    li{ margin: 8px 0; }
+
+    /* ── Code ── */
+    .code-block{
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-2);
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.6;
+    }
+
+    /* ── Prompt ── */
+    .prompt{
+      background: rgba(122,162,255,0.07);
+      border: 1px solid rgba(122,162,255,0.2);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 16px 0;
+      font-size: 0.98rem;
+      color: #dde4ff;
+      line-height: 1.7;
+    }
+    .prompt-label{
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    /* ── Tip ── */
+    .tip{
+      background: rgba(126,240,201,0.07);
+      border: 1px solid rgba(126,240,201,0.18);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      font-size: 0.97rem;
+      color: #d4fff4;
+    }
+    .tip strong{ color: var(--accent-2); }
+
+    /* ── Waarschuwing ── */
+    .warn{
+      background: rgba(255,184,108,0.07);
+      border: 1px solid rgba(255,184,108,0.2);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      font-size: 0.97rem;
+      color: #fff0dc;
+    }
+    .warn strong{ color: var(--accent-3); }
+
+    /* ── Highlight quote ── */
+    .quote{
+      margin: 24px 0;
+      padding: 18px 22px;
+      border-left: 4px solid var(--accent-2);
+      background: rgba(255,255,255,0.03);
+      border-radius: 14px;
+      color: #f4fff9;
+      font-size: 1.06rem;
+    }
+
+    /* ── Grid overzicht ── */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .tile{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .tile h4{ margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); }
+    .tile p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+    /* ── Mappen structuur ── */
+    .folder{
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 14px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      line-height: 1.9;
+    }
+    .folder .dir  { color: var(--accent); }
+    .folder .file { color: var(--accent-2); }
+    .folder .note { color: var(--muted); font-style: italic; }
+
+    /* ── Workflow stappen ── */
+    .flow{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .flow-item{
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .flow-icon{
+      flex-shrink: 0;
+      font-size: 1.3rem;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .flow-item p{ margin: 0; font-size: 0.97rem; }
+    .flow-item strong{ color: #fff; }
+
+    /* ── Samenvatting tabel ── */
+    .overzicht{
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+    .overzicht th{
+      text-align: left;
+      padding: 10px 14px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--line);
+      font-weight: 600;
+    }
+    .overzicht td{
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    .overzicht td:first-child{ color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
+
+    .footer-note{
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    strong{ color: #ffffff; }
+
+    @media (max-width: 640px){
+      .hero, .content{ padding-left: 22px; padding-right: 22px; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+<article class="card">
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <div class="tag-row">
+      <span class="tag tag-blue">Handleiding</span>
+      <span class="tag tag-green">Beginners</span>
+      <span class="tag tag-orange">Obsidian + Claude</span>
+    </div>
+    <h1>Bouw je eigen LLM Wiki</h1>
+    <p class="subtitle">
+      Een stap-voor-stap handleiding voor beginners: van een lege map naar een levende kennisbank
+      die je samen met Claude opbouwt en bijhoudt.
+    </p>
+  </header>
+
+  <!-- ── INHOUD ── -->
+  <main class="content">
+
+    <p class="lead">
+      Je hebt geen technische kennis nodig. Alles wat je nodig hebt is
+      <strong>Obsidian</strong> (gratis), een account op <strong>claude.ai</strong> (gratis),
+      en ongeveer <strong>30 minuten</strong> om alles in te richten.
+    </p>
+
+    <div class="quote">
+      Het idee: jij verzamelt bronnen en stelt vragen — Claude leest, vat samen en structureert.
+      Samen bouwen jullie een kennisbank die steeds rijker wordt.
+    </div>
+
+    <!-- ── WAT HEB JE NODIG ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">0</div>
+        <h2>Wat heb je nodig?</h2>
+      </div>
+
+      <div class="grid">
+        <div class="tile">
+          <h4>Obsidian</h4>
+          <p>Gratis notitie-app. Download via obsidian.md</p>
+        </div>
+        <div class="tile">
+          <h4>Claude.ai</h4>
+          <p>Gratis account via claude.ai — geen installatie nodig.</p>
+        </div>
+        <div class="tile">
+          <h4>Jouw bronnen</h4>
+          <p>Teksten, notities, artikelen die je wilt verwerken.</p>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Tip:</strong> Begin met één onderwerp dat je al een beetje kent. Dat maakt het makkelijker om de output van Claude te beoordelen.
+      </div>
+    </div>
+
+    <!-- ── STAP 1 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">1</div>
+        <h2>Installeer Obsidian en maak een kluis aan</h2>
+      </div>
+
+      <p>
+        Obsidian werkt met een <strong>kluis</strong> (vault) — dit is gewoon een map op je computer
+        waar al je notities in worden opgeslagen als gewone tekstbestanden (.md).
+      </p>
+
+      <ol>
+        <li>Ga naar <strong>obsidian.md</strong> en download de app voor jouw besturingssysteem.</li>
+        <li>Open Obsidian en klik op <strong>"Create new vault"</strong>.</li>
+        <li>Geef de kluis een naam, bijvoorbeeld <strong>mijn-wiki</strong>.</li>
+        <li>Kies een locatie op je computer (bijv. Documenten).</li>
+        <li>Klik op <strong>"Create"</strong>.</li>
+      </ol>
+
+      <div class="tip">
+        <strong>Wat is een .md bestand?</strong> Markdown — een eenvoudig tekstformaat. Je schrijft gewone tekst, en Obsidian maakt er een nette notitie van. Je kunt het altijd openen in Kladblok als dat nodig is.
+      </div>
+    </div>
+
+    <!-- ── STAP 2 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">2</div>
+        <h2>Richt de mappenstructuur in</h2>
+      </div>
+
+      <p>
+        Maak de volgende mappen en bestanden aan in je kluis. Dit is de structuur die je samen
+        met Claude gaat vullen en onderhouden.
+      </p>
+
+      <div class="folder">
+<span class="dir">📁 mijn-wiki/</span>
+├── <span class="dir">📁 raw/</span>         <span class="note">← hier plak je bronmateriaal</span>
+├── <span class="dir">📁 wiki/</span>        <span class="note">← hier komt de verwerkte kennis</span>
+├── <span class="dir">📁 inbox/</span>       <span class="note">← nieuwe ideeën en vragen</span>
+├── <span class="file">📄 index.md</span>     <span class="note">← overzicht van alle onderwerpen</span>
+├── <span class="file">📄 log.md</span>       <span class="note">← bijhouden wat je hebt gedaan</span>
+└── <span class="file">📄 schema.md</span>    <span class="note">← afspraken met Claude over stijl</span>
+      </div>
+
+      <h3>Mappen aanmaken in Obsidian</h3>
+      <ol>
+        <li>Rechtermuisklik in het linker paneel (de bestandsboom).</li>
+        <li>Kies <strong>"New folder"</strong>.</li>
+        <li>Typ de mapnaam (bijv. <strong>raw</strong>) en druk op Enter.</li>
+        <li>Herhaal voor <strong>wiki</strong> en <strong>inbox</strong>.</li>
+      </ol>
+
+      <h3>Bestanden aanmaken</h3>
+      <ol>
+        <li>Klik op het pen-icoontje linksboven (of druk Ctrl+N / Cmd+N).</li>
+        <li>Typ de bestandsnaam: <strong>index</strong> (Obsidian voegt .md toe).</li>
+        <li>Herhaal voor <strong>log</strong> en <strong>schema</strong>.</li>
+      </ol>
+    </div>
+
+    <!-- ── STAP 3 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">3</div>
+        <h2>Stel schema.md in — je afspraken met Claude</h2>
+      </div>
+
+      <p>
+        Het bestand <strong>schema.md</strong> beschrijft hoe je wilt dat Claude teksten verwerkt.
+        Dit plak je straks altijd mee als instructie bij een nieuw verzoek aan Claude.
+      </p>
+
+      <p>Open <strong>schema.md</strong> in Obsidian en plak de onderstaande tekst erin:</p>
+
+      <div class="code-block">## Werkafspraken LLM Wiki
+
+**Structuur per wiki-artikel:**
+- Titel als H1 (#)
+- Korte samenvatting (2-3 zinnen) bovenaan
+- Kopjes met ## voor onderdelen
+- Opsommingen waar mogelijk
+- Links naar gerelateerde onderwerpen tussen [[dubbele haken]]
+
+**Toon:** helder en begrijpelijk, geen jargon tenzij uitgelegd
+**Taal:** Nederlands
+**Lengte:** bondig — liever kort en duidelijk dan lang en vaag
+
+**Bronvermelding:** vermeld altijd de naam van de bron onderaan</div>
+
+      <div class="tip">
+        <strong>Tip:</strong> Je kunt dit schema later aanpassen. Als je merkt dat Claude iets anders doet dan je wilt, pas dan schema.md aan en gebruik de nieuwe versie.
+      </div>
+    </div>
+
+    <!-- ── STAP 4 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">4</div>
+        <h2>Voeg je eerste bron toe in raw/</h2>
+      </div>
+
+      <p>
+        De map <strong>raw/</strong> is de invoer van je systeem. Hier bewaar je bronmateriaal
+        precies zoals je het hebt gevonden — onbewerkt.
+      </p>
+
+      <ol>
+        <li>Maak een nieuw bestand aan in de map <strong>raw/</strong>. Rechtermuisklik op de map → "New note".</li>
+        <li>Geef het een beschrijvende naam, bijv. <strong>artikel-over-AI-2024</strong>.</li>
+        <li>Plak de tekst van je bron erin (bijv. een artikel dat je wilt verwerken).</li>
+        <li>Bovenaan noteer je de oorsprong: <code>Bron: [naam of URL]</code></li>
+      </ol>
+
+      <div class="warn">
+        <strong>Let op:</strong> Kopieer nooit gevoelige of privéinformatie (wachtwoorden, persoonsgegevens) in je raw-bestanden als je die later ook naar Claude stuurt.
+      </div>
+    </div>
+
+    <!-- ── STAP 5 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">5</div>
+        <h2>Verwerk de bron met Claude</h2>
+      </div>
+
+      <p>
+        Nu ga je naar <strong>claude.ai</strong>. Je kopieert de inhoud van je bron
+        en geeft Claude de instructie om er een wiki-artikel van te maken.
+      </p>
+
+      <div class="flow">
+        <div class="flow-item">
+          <div class="flow-icon">📋</div>
+          <p><strong>Kopieer</strong> de volledige inhoud van schema.md</p>
+        </div>
+        <div class="flow-item">
+          <div class="flow-icon">📄</div>
+          <p><strong>Kopieer</strong> daarna de inhoud van je raw-bestand</p>
+        </div>
+        <div class="flow-item">
+          <div class="flow-icon">💬</div>
+          <p><strong>Plak alles</strong> in Claude met de prompt hieronder</p>
+        </div>
+        <div class="flow-item">
+          <div class="flow-icon">📥</div>
+          <p><strong>Kopieer de output</strong> terug naar Obsidian in de map wiki/</p>
+        </div>
+      </div>
+
+      <h3>Gebruik deze prompt in Claude</h3>
+      <div class="prompt">
+        <div class="prompt-label">📌 Prompt — Nieuwe bron verwerken</div>
+        Hieronder staan mijn werkafspraken, gevolgd door een bron die ik wil verwerken.
+        Maak van deze bron een wiki-artikel volgens de werkafspraken.
+        Geef het artikel een logische bestandsnaam als suggestie (zonder spaties, kleine letters, koppeltekens).
+        <br><br>
+        --- WERKAFSPRAKEN ---<br>
+        [plak hier de inhoud van schema.md]
+        <br><br>
+        --- BRON ---<br>
+        [plak hier de inhoud van je raw-bestand]
+      </div>
+
+      <h3>Output opslaan in Obsidian</h3>
+      <ol>
+        <li>Kopieer de tekst die Claude teruggeeft.</li>
+        <li>Maak een nieuw bestand aan in de map <strong>wiki/</strong>.</li>
+        <li>Gebruik de bestandsnaam die Claude suggereerde.</li>
+        <li>Plak de tekst en sla op.</li>
+      </ol>
+    </div>
+
+    <!-- ── STAP 6 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">6</div>
+        <h2>Verbanden leggen tussen artikelen</h2>
+      </div>
+
+      <p>
+        Het krachtige van Obsidian is dat je <strong>links kunt leggen</strong> tussen notities.
+        Als je in een artikel schrijft <code>[[naam-van-een-artikel]]</code>, maakt Obsidian
+        automatisch een klikbare link.
+      </p>
+
+      <p>
+        Claude kan dit voor je doen. Gebruik deze prompt nadat je meerdere wiki-artikelen hebt aangemaakt:
+      </p>
+
+      <div class="prompt">
+        <div class="prompt-label">📌 Prompt — Verbanden leggen</div>
+        Hieronder staan meerdere wiki-artikelen uit mijn kennisbank.
+        Geef voor elk artikel aan welke [[links]] je zou toevoegen naar andere artikelen in de lijst,
+        en waarom. Voeg ook toe aan welk artikel de link hoort.
+        <br><br>
+        [plak hier de inhoud van meerdere wiki-artikelen, gescheiden door --- ]
+      </div>
+
+      <div class="tip">
+        <strong>Tip:</strong> In Obsidian kun je op "Graph view" klikken (linkerpaneel, icoontje met verbonden bolletjes) om een visuele kaart van al je verbonden notities te zien. Dit wordt steeds mooier naarmate je kennisbank groeit.
+      </div>
+    </div>
+
+    <!-- ── STAP 7 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">7</div>
+        <h2>Bijhouden in log.md en index.md</h2>
+      </div>
+
+      <p>
+        Houd bij wat je hebt gedaan en wat er in je kennisbank zit.
+        Dit helpt je de structuur overzichtelijk te houden.
+      </p>
+
+      <h3>log.md — je geschiedenis</h3>
+      <div class="code-block">## Log
+
+### 2024-01-15
+- Bron verwerkt: artikel-over-AI-2024 → wiki/kunstmatige-intelligentie.md
+- Link gelegd tussen: kunstmatige-intelligentie ↔ machinaal-leren
+
+### 2024-01-16
+- Nieuwe bron toegevoegd in raw/: boek-hoofdstuk-3</div>
+
+      <h3>index.md — je overzicht</h3>
+      <p>Laat Claude je index bijwerken met deze prompt:</p>
+
+      <div class="prompt">
+        <div class="prompt-label">📌 Prompt — Index bijwerken</div>
+        Hieronder staat mijn huidige index.md en een lijst van nieuwe wiki-artikelen die ik heb toegevoegd.
+        Werk de index bij zodat alle artikelen logisch gecategoriseerd staan.
+        Houd het overzichtelijk.
+        <br><br>
+        --- HUIDIGE INDEX ---<br>
+        [plak hier de inhoud van index.md]
+        <br><br>
+        --- NIEUWE ARTIKELEN ---<br>
+        [bestandsnamen en titels van nieuwe artikelen]
+      </div>
+    </div>
+
+    <!-- ── STAP 8 ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">8</div>
+        <h2>Bestaande kennis bijwerken</h2>
+      </div>
+
+      <p>
+        Als je een nieuwe bron hebt die aansluit op een bestaand wiki-artikel,
+        kun je Claude vragen om het artikel te verrijken.
+      </p>
+
+      <div class="prompt">
+        <div class="prompt-label">📌 Prompt — Artikel bijwerken</div>
+        Hieronder staat een bestaand wiki-artikel en een nieuwe bron.
+        Werk het artikel bij met relevante inzichten uit de nieuwe bron.
+        Behoud de bestaande structuur en werkafspraken.
+        Markeer nieuwe toevoegingen niet — geef gewoon het volledige, bijgewerkte artikel terug.
+        <br><br>
+        --- WERKAFSPRAKEN ---<br>
+        [inhoud van schema.md]
+        <br><br>
+        --- BESTAAND ARTIKEL ---<br>
+        [inhoud van het wiki-artikel]
+        <br><br>
+        --- NIEUWE BRON ---<br>
+        [inhoud van de nieuwe bron]
+      </div>
+    </div>
+
+    <!-- ── OVERZICHT ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">✓</div>
+        <h2>Snelreferentie — bestanden en mappen</h2>
+      </div>
+
+      <table class="overzicht">
+        <thead>
+          <tr>
+            <th>Locatie</th>
+            <th>Waarvoor</th>
+            <th>Wie vult het?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>raw/</td><td>Onbewerkte bronnen, artikelen, teksten</td><td>Jij</td></tr>
+          <tr><td>wiki/</td><td>Verwerkte, gestructureerde kennis</td><td>Claude (jij kopieert)</td></tr>
+          <tr><td>inbox/</td><td>Losse gedachten, vragen, ideeën</td><td>Jij</td></tr>
+          <tr><td>index.md</td><td>Overzicht van alle onderwerpen</td><td>Claude (jij kopieert)</td></tr>
+          <tr><td>log.md</td><td>Wat heb ik wanneer gedaan</td><td>Jij</td></tr>
+          <tr><td>schema.md</td><td>Stijl- en structuurafspraken</td><td>Jij (eenmalig instellen)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── VEELGESTELDE VRAGEN ── -->
+    <div class="stap">
+      <div class="stap-header">
+        <div class="stap-nr">?</div>
+        <h2>Veelgestelde vragen</h2>
+      </div>
+
+      <h3>Hoe lang mag een bron zijn die ik naar Claude stuur?</h3>
+      <p>
+        Claude kan grote hoeveelheden tekst verwerken — een normaal artikel van een paar duizend woorden is geen probleem. Bij heel lange documenten (boeken, rapporten) kun je het beste per hoofdstuk werken.
+      </p>
+
+      <h3>Moet ik elke keer schema.md meesturen?</h3>
+      <p>
+        Ja, want Claude onthoudt niets tussen gesprekken. Door schema.md altijd mee te sturen zorg je dat de stijl consistent blijft.
+      </p>
+
+      <h3>Wat als de output van Claude niet klopt?</h3>
+      <p>
+        Controleer altijd de output, zeker bij feitelijke informatie. Je kunt Claude vragen iets aan te passen door het artikel en je opmerking terug te sturen: <em>"Pas regel X aan, want…"</em>
+      </p>
+
+      <h3>Kan ik Obsidian ook op mijn telefoon gebruiken?</h3>
+      <p>
+        Ja, er is een mobiele app. Synchroniseren kan via iCloud, Google Drive of de betaalde Obsidian Sync. Voor beginners is werken op de computer het makkelijkst.
+      </p>
+    </div>
+
+    <div class="footer-note">
+      <strong>Volgende stap:</strong> Als je kennisbank groeit, kun je Claude ook vragen om verbanden te leggen die je zelf niet zag, samenvattingen te maken van een heel onderwerp, of gaten in je kennis te signaleren.
+    </div>
+
+  </main>
+</article>
+</div>
+</body>
+</html>
