@@ -177,10 +177,28 @@
     }
 
     .steps .num {
-      color: var(--accent);
+      color: var(--muted);
       font-weight: 700;
       font-size: 1rem;
       min-width: 20px;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      min-width: unset;
+      padding: 8px 16px;
+      font-weight: 500;
+      font-size: 0.88rem;
+      margin-top: 18px;
+    }
+
+    .btn-secondary:hover {
+      color: var(--text);
+      border-color: rgba(148, 163, 184, 0.5);
+      filter: none;
+      transform: none;
     }
 
     footer {
@@ -239,7 +257,7 @@
     <li><span class="num">2</span> Plak in <a href="https://chatgpt.com/" rel="noopener noreferrer" target="_blank">ChatGPT</a>, <a href="https://claude.ai/" rel="noopener noreferrer" target="_blank">Claude</a>, <a href="https://gemini.google.com/" rel="noopener noreferrer" target="_blank">Gemini</a> of <a href="https://copilot.microsoft.com/" rel="noopener noreferrer" target="_blank">Copilot</a></li>
     <li><span class="num">3</span> Druk op Enter</li>
   </ol>
-  <button id="shareButton" type="button" style="margin-top:18px;background:transparent;color:#9ca3af;border:1px solid rgba(148,163,184,0.35);min-width:unset;padding:8px 16px;font-weight:500;font-size:0.88rem;">Deel deze pagina</button>
+  <button id="shareButton" type="button" class="btn-secondary">Deel deze pagina</button>
   <p style="margin-top:22px; font-size:0.82rem; color:#64748b; line-height:1.5; opacity:0.78;">
     Deze simulatie vertegenwoordigt niet noodzakelijk de actuele standpunten van Ties Dams.
   </p>
