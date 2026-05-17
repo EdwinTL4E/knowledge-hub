@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PersonaLab — Ties Dams | De Nieuwe keizer | Xi</title>
+<style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-soft: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.14);
+      --border: rgba(148, 163, 184, 0.22);
+      --success: #22c55e;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.16), transparent 32%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      padding: 48px 20px 28px;
+    }
+
+    .hero {
+      padding: 34px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.92), rgba(15, 23, 42, 0.92));
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      word-break: keep-all;
+    }
+
+    .subtitle {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.3vw, 1.35rem);
+    }
+
+    .section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(17, 24, 39, 0.86);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      margin: 14px 0 6px;
+      font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+      font-weight: 600;
+      color: #cbd5e1;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    a {
+      color: #7dd3fc;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(125, 211, 252, 0.45);
+    }
+
+    a:hover {
+      color: #e0f2fe;
+      border-bottom-color: #e0f2fe;
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .copy-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      min-width: 160px;
+      padding: 11px 18px;
+      color: #06121f;
+      background: var(--accent);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button.success {
+      background: #3f8f67;
+      color: #eafaf1;
+      font-weight: 700;
+    }
+
+    .prompt-box {
+      white-space: pre-wrap;
+      overflow-x: auto;
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: #dbeafe;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+    }
+
+    .steps li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 1rem;
+    }
+
+    .steps li:last-child {
+      border-bottom: none;
+    }
+
+    .steps .num {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1rem;
+      min-width: 20px;
+    }
+
+    footer {
+      margin: 28px 0 0;
+      color: #64748b;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        padding: 24px 14px 20px;
+      }
+
+      .hero,
+      .section {
+        padding: 22px;
+        border-radius: 22px;
+      }
+
+      .prompt-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .copy-wrap {
+        width: 100%;
+      }
+
+      .prompt-box {
+        padding: 16px;
+        font-size: 0.84rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<h1>PersonaLab</h1>
+<h2 class="hero-subtitle">Ties Dams | De Nieuwe keizer | Xi</h2>
+<p class="subtitle">Simuleer een gesprek met Ties Dams over China, macht en wereldorde.</p>
+</header>
+
+<section aria-labelledby="toelichting" class="section">
+  <h2 id="toelichting">Toelichting</h2>
+  <p style="color:#bae6fd; font-weight:600; font-size:1.05rem; margin-bottom:18px;">Werkt met elke AI die je al gebruikt.</p>
+  <p>Ties Dams gehoord in <a href="https://www.youtube.com/watch?v=Bz2dp18FFik" rel="noopener noreferrer" target="_blank"><em>Boekestijn &amp; De Wijk</em></a>? Ga nu zelf het gesprek aan over China, macht en wereldorde.</p>
+  <ol class="steps">
+    <li><span class="num">1</span> Klik op "Kopieer prompt"</li>
+    <li><span class="num">2</span> Plak in <a href="https://chatgpt.com/" rel="noopener noreferrer" target="_blank">ChatGPT</a>, <a href="https://claude.ai/" rel="noopener noreferrer" target="_blank">Claude</a>, <a href="https://gemini.google.com/" rel="noopener noreferrer" target="_blank">Gemini</a> of <a href="https://copilot.microsoft.com/" rel="noopener noreferrer" target="_blank">Copilot</a></li>
+    <li><span class="num">3</span> Druk op Enter</li>
+  </ol>
+  <button id="shareButton" type="button" style="margin-top:18px;background:transparent;color:#9ca3af;border:1px solid rgba(148,163,184,0.35);min-width:unset;padding:8px 16px;font-weight:500;font-size:0.88rem;">Deel deze pagina</button>
+  <p style="margin-top:22px; font-size:0.82rem; color:#64748b; line-height:1.5; opacity:0.78;">
+    Deze simulatie is gebaseerd op publieke bronnen en vertegenwoordigt niet noodzakelijk de actuele standpunten van Ties Dams.
+  </p>
+</section>
+
+<section aria-labelledby="prompt-title" class="section">
+<div class="prompt-header">
+<h2 id="prompt-title">Prompt</h2>
+<div class="copy-wrap">
+<button id="copyButton" type="button">Kopieer prompt</button>
+</div>
+</div>
+<button id="toggleButton" type="button" style="appearance:none;border:0;border-radius:0;min-width:unset;padding:0;background:none;color:#9ca3af;font-size:0.88rem;font-weight:400;cursor:pointer;border-bottom:1px solid rgba(156,163,175,0.35);margin-bottom:14px;">Toon prompt</button>
+<div class="prompt-box" id="promptText" style="display:none;">Neem de rol aan van Ties Dams voor een educatieve en analytische simulatie gebaseerd op publieke bronnen, interviews, podcasts, lezingen en het boek De Nieuwe keizer.
+
+Start het gesprek altijd eerst met een korte introductie van maximaal 5 regels waarin Ties zichzelf voorstelt en uitlegt dat deze simulatie bedoeld is om beter te begrijpen hoe China, de CCP en Xi Jinping denken over macht, geschiedenis, technologie en wereldorde. Verwijs kort naar de boeken _De Nieuwe keizer_ en _Xi_. Geef uitsluitend deze introductie en wacht daarna eerst op een vraag of onderwerp van de gebruiker voordat je inhoudelijk verdergaat.
+
+Pas daarna begint het daadwerkelijke gesprek of de beantwoording van vragen.
+
+Houd deze rol en denkwijze gedurende het hele gesprek consistent vast, inclusief stijl, perspectief, prioriteiten en analysekader, tenzij de gebruiker expliciet vraagt om de rol los te laten of van persona te wisselen.
+
+Reageer vervolgens zoals Ties Dams doorgaans spreekt en analyseert:
+inhoudelijk scherp, historisch bewust, geopolitiek analytisch en enigszins bedachtzaam. Geen simplistische oneliners, geen hysterie over China, maar ook geen naïef optimisme.
+
+Benader China als meer dan alleen een staat of economie. Neem serieus mee:
+
+- de rol van de Chinese Communistische Partij,
+- historische vernedering,
+- beschavingsdenken,
+- Leninistische partijcultuur,
+- technologische machtsopbouw,
+- perceptie van verval in het Westen,
+- en systeemcompetitie tussen grootmachten.
+
+Maak onderscheid tussen:
+
+- feiten,
+- interpretaties,
+- Chinese percepties,
+- strategische framing,
+- en westerse projecties op China.
+
+Laat ruimte voor:
+
+- nuance,
+- onzekerheid,
+- interne spanningen binnen China,
+- en de mogelijkheid dat zowel China als het Westen elkaar verkeerd begrijpen.
+
+Schrijf compact en natuurlijk. Niet overdreven gepolijst. Vermijd AI-achtige perfectie, managementtaal en overdreven structuur.
+
+Beantwoord vragen alsof je deelneemt aan een verdiepend gesprek, interview of podcast over China, Xi Jinping, geopolitiek en de thema's uit de boeken _De Nieuwe keizer_ en _Xi_.</div>
+</section>
+
+<footer>v1.0 · mei 2026 · TL4E</footer>
+</main>
+
+<script>
+    const copyButton = document.getElementById('copyButton');
+    const promptText = document.getElementById('promptText');
+    const toggleButton = document.getElementById('toggleButton');
+
+    toggleButton.addEventListener('click', () => {
+      const hidden = promptText.style.display === 'none';
+      promptText.style.display = hidden ? 'block' : 'none';
+      toggleButton.textContent = hidden ? 'Verberg prompt' : 'Toon prompt';
+    });
+
+    async function copyPrompt() {
+      const text = promptText.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.textContent = 'Gekopieerd';
+        copyButton.classList.add('success');
+        setTimeout(() => {
+          copyButton.textContent = 'Kopieer prompt';
+          copyButton.classList.remove('success');
+        }, 2200);
+      } catch (error) {
+        const range = document.createRange();
+        range.selectNodeContents(promptText);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        copyButton.textContent = 'Kopieer handmatig';
+        copyButton.classList.remove('success');
+      }
+    }
+
+    copyButton.addEventListener('click', copyPrompt);
+
+    const shareButton = document.getElementById('shareButton');
+    const shareUrl = 'https://edwintl4e.github.io/knowledge-hub/PersonaLab_Ties_Dams.html';
+
+    shareButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        shareButton.textContent = 'Gekopieerd — plak in een bericht of mail';
+        shareButton.classList.add('success');
+        setTimeout(() => {
+          shareButton.textContent = 'Deel deze pagina';
+          shareButton.classList.remove('success');
+        }, 2200);
+      } catch {
+        shareButton.textContent = 'Kopieer handmatig';
+      }
+    });
+  </script>
+</body>
+</html>
