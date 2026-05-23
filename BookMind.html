@@ -134,7 +134,6 @@
     min-width: 22px;
   }
 
-  /* All real buttons */
   .btn-primary, .btn-outline {
     display: inline-block;
     appearance: none;
@@ -166,7 +165,6 @@
   }
   .btn-outline:hover { color: var(--text); border-color: var(--accent); }
 
-  /* Toggle — styled as a text link, NOT a button element */
   .toggle-link {
     display: inline-block;
     cursor: pointer;
@@ -200,6 +198,7 @@
     font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
     font-size: 0.875rem;
     line-height: 1.7;
+    display: none;
   }
 
   .about-box {
@@ -214,24 +213,6 @@
     font-size: 0.95rem;
   }
   .about-box h2 { font-size: 1.15rem; margin-bottom: 14px; }
-
-  .label-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .label-pill {
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--green);
-    background: var(--green-soft);
-    border: 1px solid rgba(74,124,89,0.3);
-    border-radius: 999px;
-    padding: 3px 10px;
-  }
 
   .book-accent {
     position: absolute;
@@ -273,35 +254,38 @@
     <div class="hero-top">
       <div>
         <h1>BookMind</h1>
-        <p class="tagline">Spreek met de <em>schrijver</em> achter het boek</p>
+        <p class="tagline">Spreek met <em>schrijvers en hybride denkers</em></p>
       </div>
       <button class="btn-outline" id="aboutBtn" type="button">About</button>
     </div>
 
-    <div class="about-box" id="aboutBox" style="display:none;">
+    <div class="about-box" id="aboutBox">
       <h2>Wat is BookMind?</h2>
-      <p>BookMind laat je een gesprek voeren met de schrijver achter een boek — in hun eigen stem, stijl en denkkader.</p>
-      <p>Geef een boektitel of schrijversnaam. De AI zoekt het op, vat het samen en neemt daarna de rol van de auteur aan.</p>
+      <p>BookMind laat je gesprekken voeren met schrijvers, denkers en hybride denkers die ontstaan uit meerdere intellectuele tradities.</p>
+      <p>Gebruik één schrijver voor een directe ontmoeting met diens gedachtewereld, of combineer meerdere auteurs tot één nieuwe stem die originele verbanden en inzichten kan formuleren.</p>
+      <p>Zo ontstaat geen simpel rollenspel, maar een ruimte voor reflectie, wijsheid en creatieve synthese.</p>
       <p>Voorbeelden:<br>
-      • Verken <em>Sapiens</em> met Yuval Noah Harari<br>
-      • Stel Viktor Frankl vragen over zingeving<br>
-      • Debatteer met Nassim Taleb over risico en onzekerheid</p>
+      • Carl Jung + Nassim Taleb → psychologische antifragiliteit<br>
+      • Marcus Aurelius + Viktor Frankl → stoïcijnse zingeving<br>
+      • Nietzsche + Jung → existentiële individuatie</p>
       <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
     </div>
   </header>
 
   <section class="section" aria-labelledby="uitleg-titel">
-    <h2 id="uitleg-titel">Hoe het werkt</h2>
-    <p>Kopieer de prompt en plak hem in je favoriete AI-tool. De AI vraagt om een boek of schrijver, zoekt het op en wordt vervolgens de auteur — klaar om vragen te beantwoorden in diens eigen stijl.</p>
+    <h2 id="uitleg-titel">Toelichting</h2>
+    <p>Gebruik BookMind om boeken, ideeën en perspectieven te verkennen via schrijvers en hybride denkers.</p>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool.</p>
+
     <ol class="steps">
       <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
       <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
-      <li><span class="num">3</span>Druk op Enter en noem een boek of schrijver</li>
-      <li><span class="num">4</span>De AI introduceert zich als de auteur — stel je vragen</li>
+      <li><span class="num">3</span>Noem een boek, schrijver of combinatie van schrijvers</li>
+      <li><span class="num">4</span>De AI activeert een auteur of hybride denker</li>
     </ol>
-    <button class="btn-outline" id="shareBtn" type="button" style="margin-top:20px;">Deel deze pagina</button>
+
     <p style="margin-top:20px;font-size:0.8rem;color:#4a4a3e;line-height:1.5;">
-      Deze simulatie is een AI-interpretatie gebaseerd op publieke bronnen. Het vertegenwoordigt niet noodzakelijk letterlijke standpunten van de gesimuleerde auteur.
+      Gebaseerd op publieke informatie en interpretaties. Geen authentieke communicatie of letterlijke representatie van echte personen.
     </p>
   </section>
 
@@ -312,11 +296,49 @@
       </div>
       <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
     </div>
+
     <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
-    <div class="prompt-box" id="promptText" style="display:none;">Vertel eerst kort het doel van deze prompt. Vraag vervolgens om een boek of schrijver. Zodra ik de titel of naam geef: Raadpleeg het internet. Vat het boek kort samen (TLDR, maximaal 10 zinnen). Neem daarna direct de rol en persona aan van de schrijver. Introduceer jezelf kort in die rol, in de stijl en toon van de auteur. Antwoord altijd in het Nederlands. Wacht vervolgens op mijn verdere instructies. Blijf consequent in de persona, ook als ik doorvraag of van onderwerp wissel. Wanneer het een onbekende titel is: geef dat aan en vraag opnieuw. Wanneer alleen de schrijversnaam wordt aangegeven: baseer de interactie op het meest bekende boek van die auteur en geef aan welk boek je gebruikt.</div>
+
+    <div class="prompt-box" id="promptText">Vertel eerst kort het doel van deze prompt.
+
+Gebruik standaard een directe inhoudelijke antwoordstijl zonder ongevraagde vervolgvragen.
+
+Wanneer de gebruiker expliciet vraagt om interactie, reflectie of dialoog, schakel over naar gespreksmodus met ruimte voor verdiepende vervolgvragen.
+
+Vraag vervolgens om:
+- een boek,
+- één schrijver,
+- of meerdere schrijvers voor een hybride persona.
+
+Wanneer één schrijver wordt genoemd:
+- raadpleeg het internet,
+- geef een korte TLDR van het bekendste werk (maximaal 10 zinnen),
+- neem daarna direct de rol aan van de schrijver,
+- antwoord altijd in het Nederlands,
+- behoud stijl, denkkader, overtuigingen en toon van de auteur,
+- de auteur geeft standaard eerst een volledig inhoudelijk antwoord;
+- stel alleen een vervolgvraag wanneer de gebruiker expliciet om interactie, coaching of dialoog vraagt;
+- vermijd onnodige meta-uitleg over de prompt, rol of interactiestijl.
+
+Wanneer meerdere schrijvers worden genoemd:
+- raadpleeg het internet voor iedere schrijver,
+- identificeer per schrijver de belangrijkste ideeën, thema’s en denkstijlen,
+- creëer vervolgens één coherente hybride persona,
+- combineer herkenbare elementen van iedere schrijver,
+- behoud spanningen en tegenstrijdigheden tussen denkkaders,
+- voorkom een generieke AI-stem,
+- laat de hybride persona originele inzichten formuleren die logisch voortkomen uit de gecombineerde denkkaders,
+- focus op de sterkste gedeelde thema’s en spanningsvelden,
+- activeer daarna direct de hybride persona.
+
+Blijf gedurende het hele gesprek consequent in de gekozen persona of hybride identiteit.
+
+Wanneer een onbekende titel of schrijver wordt genoemd:
+- geef dat eerlijk aan,
+- vraag vervolgens opnieuw om een boek of schrijver.</div>
   </section>
 
-  <footer>v1.0 · mei 2026 · TL4E</footer>
+  <footer>v1.6 · mei 2026 · TL4E</footer>
 </main>
 
 <script>
@@ -325,7 +347,7 @@
   const rawPrompt  = promptText.textContent.trim();
 
   function togglePrompt() {
-    const isHidden = promptText.style.display === 'none';
+    const isHidden = getComputedStyle(promptText).display === 'none';
     promptText.style.display = isHidden ? 'block' : 'none';
     toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
   }
@@ -360,20 +382,9 @@
   const aboutBtn = document.getElementById('aboutBtn');
   const aboutBox = document.getElementById('aboutBox');
   aboutBtn.addEventListener('click', () => {
-    const hidden = aboutBox.style.display === 'none';
+    const hidden = getComputedStyle(aboutBox).display === 'none';
     aboutBox.style.display = hidden ? 'block' : 'none';
     aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
-  });
-
-  const shareBtn = document.getElementById('shareBtn');
-  shareBtn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText('https://edwintl4e.github.io/knowledge-hub/BookMind.html');
-      shareBtn.textContent = 'Link gekopieerd ✓';
-      setTimeout(() => { shareBtn.textContent = 'Deel deze pagina'; }, 2400);
-    } catch {
-      shareBtn.textContent = 'Kopieer handmatig';
-    }
   });
 </script>
 </body>
