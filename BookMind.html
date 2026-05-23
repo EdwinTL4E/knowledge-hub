@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BookMind</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0c0f0a;
+    --text: #e8e4dc;
+    --muted: #8a8878;
+    --accent: #c9b97a;
+    --green: #4a7c59;
+    --green-soft: rgba(74, 124, 89, 0.15);
+    --border: rgba(201, 185, 122, 0.18);
+    --border-soft: rgba(201, 185, 122, 0.08);
+    --shadow: 0 32px 80px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(74,124,89,0.12) 0%, transparent 45%),
+      radial-gradient(ellipse at 90% 80%, rgba(201,185,122,0.08) 0%, transparent 40%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .page {
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 40px 44px;
+    border: 1px solid var(--border);
+    border-radius: 4px 24px 24px 24px;
+    background: linear-gradient(145deg, rgba(26,31,20,0.95), rgba(12,15,10,0.95));
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--accent), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 36px;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    background: rgba(26,31,20,0.7);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,185,122,0.35);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #e8d9a0; border-bottom-color: #e8d9a0; }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.97rem;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+    font-size: 1.1rem;
+    min-width: 22px;
+  }
+
+  /* All real buttons */
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0c0f0a;
+    border: none;
+    padding: 12px 24px;
+    min-width: 160px;
+  }
+  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success { background: var(--green); color: #d4f0de; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  /* Toggle — styled as a text link, NOT a button element */
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(138,136,120,0.4);
+    padding-bottom: 2px;
+    margin-bottom: 14px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--text); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: #060806;
+    color: #c8d8b8;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-soft);
+    background: #060806;
+    color: #c8d8b8;
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1.15rem; margin-bottom: 14px; }
+
+  .label-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .label-pill {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: var(--green-soft);
+    border: 1px solid rgba(74,124,89,0.3);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+
+  .book-accent {
+    position: absolute;
+    right: 44px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.06;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1;
+    user-select: none;
+  }
+
+  footer {
+    margin-top: 32px;
+    text-align: center;
+    color: #4a4a3e;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 22px 20px; }
+    .btn-primary { width: 100%; }
+    .book-accent { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="book-accent">Aa</div>
+    <div class="hero-top">
+      <div>
+        <h1>BookMind</h1>
+        <p class="tagline">Spreek met de <em>schrijver</em> achter het boek</p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">About</button>
+    </div>
+
+    <div class="about-box" id="aboutBox" style="display:none;">
+      <h2>Wat is BookMind?</h2>
+      <p>BookMind laat je een gesprek voeren met de schrijver achter een boek — in hun eigen stem, stijl en denkkader.</p>
+      <p>Geef een boektitel of schrijversnaam. De AI zoekt het op, vat het samen en neemt daarna de rol van de auteur aan.</p>
+      <p>Voorbeelden:<br>
+      • Verken <em>Sapiens</em> met Yuval Noah Harari<br>
+      • Stel Viktor Frankl vragen over zingeving<br>
+      • Debatteer met Nassim Taleb over risico en onzekerheid</p>
+      <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Hoe het werkt</h2>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool. De AI vraagt om een boek of schrijver, zoekt het op en wordt vervolgens de auteur — klaar om vragen te beantwoorden in diens eigen stijl.</p>
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Druk op Enter en noem een boek of schrijver</li>
+      <li><span class="num">4</span>De AI introduceert zich als de auteur — stel je vragen</li>
+    </ol>
+    <button class="btn-outline" id="shareBtn" type="button" style="margin-top:20px;">Deel deze pagina</button>
+    <p style="margin-top:20px;font-size:0.8rem;color:#4a4a3e;line-height:1.5;">
+      Deze simulatie is een AI-interpretatie gebaseerd op publieke bronnen. Het vertegenwoordigt niet noodzakelijk letterlijke standpunten van de gesimuleerde auteur.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+    <div class="prompt-box" id="promptText" style="display:none;">Vertel eerst kort het doel van deze prompt. Vraag vervolgens om een boek of schrijver. Zodra ik de titel of naam geef: Raadpleeg het internet. Vat het boek kort samen (TLDR, maximaal 10 zinnen). Neem daarna direct de rol en persona aan van de schrijver. Introduceer jezelf kort in die rol, in de stijl en toon van de auteur. Antwoord altijd in het Nederlands. Wacht vervolgens op mijn verdere instructies. Blijf consequent in de persona, ook als ik doorvraag of van onderwerp wissel. Wanneer het een onbekende titel is: geef dat aan en vraag opnieuw. Wanneer alleen de schrijversnaam wordt aangegeven: baseer de interactie op het meest bekende boek van die auteur en geef aan welk boek je gebruikt.</div>
+  </section>
+
+  <footer>v1.0 · mei 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = promptText.style.display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = aboutBox.style.display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+  });
+
+  const shareBtn = document.getElementById('shareBtn');
+  shareBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText('https://edwintl4e.github.io/knowledge-hub/BookMind.html');
+      shareBtn.textContent = 'Link gekopieerd ✓';
+      setTimeout(() => { shareBtn.textContent = 'Deel deze pagina'; }, 2400);
+    } catch {
+      shareBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+</script>
+</body>
+</html>
