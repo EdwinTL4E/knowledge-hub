@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MindFrame</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #080b14;
+    --text: #eef2ff;
+    --muted: #9aa7c7;
+    --accent: #7dd3fc;
+    --accent-2: #c084fc;
+    --indigo: #4f46e5;
+    --indigo-soft: rgba(79, 70, 229, 0.18);
+    --border: rgba(125, 211, 252, 0.20);
+    --border-soft: rgba(192, 132, 252, 0.12);
+    --panel: rgba(15, 23, 42, 0.78);
+    --code-bg: #050713;
+    --code-text: #c7d2fe;
+    --shadow: 0 32px 90px rgba(0,0,0,0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 12% 18%, rgba(79,70,229,0.24) 0%, transparent 44%),
+      radial-gradient(ellipse at 88% 20%, rgba(125,211,252,0.12) 0%, transparent 36%),
+      radial-gradient(ellipse at 68% 88%, rgba(192,132,252,0.13) 0%, transparent 42%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .page {
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 40px 44px;
+    border: 1px solid var(--border);
+    border-radius: 4px 24px 24px 24px;
+    background: linear-gradient(145deg, rgba(15,23,42,0.96), rgba(8,11,20,0.96));
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--indigo), var(--accent), var(--accent-2), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 36px;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    background: var(--panel);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(125,211,252,0.35);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #bae6fd; border-bottom-color: #bae6fd; }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.97rem;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+    font-size: 1.1rem;
+    min-width: 22px;
+  }
+
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #050713;
+    border: none;
+    padding: 12px 24px;
+    min-width: 160px;
+  }
+  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success { background: #22c55e; color: #052e16; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(154,167,199,0.4);
+    padding-bottom: 2px;
+    margin-bottom: 14px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--text); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    display: none;
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-soft);
+    background: var(--code-bg);
+    color: var(--code-text);
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1.15rem; margin-bottom: 14px; }
+
+  .mind-accent {
+    position: absolute;
+    right: 44px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.075;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .note {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  footer {
+    margin-top: 32px;
+    text-align: center;
+    color: #475569;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 22px 20px; }
+    .btn-primary { width: 100%; }
+    .mind-accent { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="mind-accent">Ψ</div>
+    <div class="hero-top">
+      <div>
+        <h1>MindFrame</h1>
+        <p class="tagline">Verken hoe <em>invloedrijke denkers, leiders en personages</em> naar complexe vraagstukken kijken.</p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">About</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is MindFrame?</h2>
+      <p>MindFrame is een cognitieve simulatie-interface waarmee je bekende personen, historische figuren, fictieve personages en hybride denkkaders kunt bevragen.</p>
+      <p>De simulatie is gebaseerd op publieke uitspraken, interviews, boeken, gedragingen, overtuigingen en historische patronen.</p>
+      <p>De focus ligt niet op oppervlakkige imitatie, maar op consistente denkpatronen, wereldbeelden en besluitvorming.</p>
+      <p>MindFrame ondersteunt advies, strategie, debatvoorbereiding, coaching, scenarioanalyse, onderhandelingen en perspectiefvorming.</p>
+      <p>Actuele ontwikkelingen kunnen worden meegenomen via internetinformatie indien beschikbaar.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Toelichting</h2>
+    <p>MindFrame helpt je om complexe vragen te bekijken door het denkkader van invloedrijke personen, personages of gecombineerde perspectieven.</p>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool.</p>
+
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>“Kopieer prompt”</strong></li>
+      <li><span class="num">2</span>Plak de prompt in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a> of <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> en druk op Enter</li>
+      <li><span class="num">3</span>Noem een persoon, personage of combinatie van denkkaders</li>
+      <li><span class="num">4</span>Kies een simulatieniveau</li>
+      <li><span class="num">5</span>Start de cognitieve simulatie</li>
+    </ol>
+
+    <p class="note">Voor de beste ervaring werken ChatGPT, Claude en Gemini doorgaans het meest consistent voor cognitieve simulatie en perspectiefmodellering. Gebaseerd op publieke informatie en interpretaties; geen authentieke communicatie of letterlijke representatie van echte personen.</p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+    <div class="prompt-box" id="promptText">SYSTEEM: Geef altijd platte tekst. Geen HTML, markdown, widgets of visuals. Geen uitzonderingen.
+
+Bij modellen met strengere veiligheidsbeperkingen: focus op denkkaderanalyse, perspectiefvorming en strategische scenario’s in plaats van letterlijke persoonsimulatie.
+
+MindFrame is een minimalistische cognitieve simulatie-interface.
+
+De tool simuleert hoe echte personen, fictieve personages, historische figuren en hybride persona’s denken, communiceren en beslissingen nemen op basis van publieke uitspraken, boeken, interviews, gedragingen en historische patronen.
+
+MindFrame ondersteunt advies, scenarioanalyse, strategie, prognoses, perspectiefvorming en cognitieve simulatie.
+
+De tool kan meerdere denkkaders combineren tot één coherente hybride persona en gebruikt internet voor actuele informatie en recente ontwikkelingen.
+
+De interface moet starten met een korte informatieve toelichting over MindFrame — doel en gebruik — zonder vragen te stellen. Vermeld dat bij twijfel over actualiteit het commando "Check internet" gebruikt kan worden. Start daarna direct met: "Wie wil je bevragen?"
+
+Wacht op invoer van de gebruiker. 
+
+Vraag daarna exact onderstaande tekst. Toon de nummering.
+
+"Kies simulatieniveau:
+
+1. Alleen denkkader — kernideeën en redeneerwijze
+2. Denkkader + communicatiestijl — ook toon, woordkeuze, retoriek
+3. Volledige cognitieve simulatie — benadert taalgebruik, redeneerwijze en besluitvorming van de persoon"
+
+Wacht opnieuw op invoer van de gebruiker voordat de simulatie start.
+
+Zoek altijd eerst op internet voordat je antwoord geeft op vragen over recente gebeurtenissen, uitspraken of ontmoetingen. Doe dit zonder dat de gebruiker erom hoeft te vragen.
+
+Gebruik je kennis over publieke uitspraken, boeken, interviews, gedragingen en historische patronen.
+
+Gebruik de actuele context van de vraag bij het simuleren van scenario’s en besluitvorming.
+
+Bij prognoses of strategische vragen: geef meerdere plausibele scenario’s met korte kansinschatting.
+
+Maak onderscheid tussen feiten, interpretaties en speculatieve aannames.
+
+Baseer simulaties op consistente gedrags- en denkpatronen, niet alleen op stijl of imitatie. Voorkom karikaturen, overdrijving en simplistische imitatie.
+
+Analyseer en modelleer afhankelijk van het gekozen niveau: rol, denkkader, stijl, taalgebruik, overtuigingen, besluitvorming, wereldbeeld
+
+Blijf gedurende het gesprek consistent in deze simulatie. Verlaat de simulatie alleen wanneer de gebruiker daarom vraagt.
+
+Geef compacte directe inhoudelijke antwoorden zonder: neutrale AI-taal, meta-uitleg, onnodige disclaimers
+
+Vermeld onzekerheid wanneer voorspellingen of aannames speculatief zijn.
+
+Bij meerdere namen: combineer de denkkaders tot één hybride persona.
+
+Bij onbekende namen: vraag opnieuw wie de gebruiker wil bevragen en geef suggesties van vergelijkbare bekende figuren.</div>
+  </section>
+
+  <footer>v1.0 · mei 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = getComputedStyle(promptText).display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+  });
+</script>
+</body>
+</html>
