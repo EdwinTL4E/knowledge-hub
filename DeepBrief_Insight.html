@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DeepBrief Insight</title>
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+ :root {
+ --bg: #070b12;
+ --panel: #0d1420;
+ --panel-strong: #111c2d;
+ --text: #edf4ff;
+ --muted: #8b9bb0;
+ --accent: #63e6be;
+ --accent-2: #78a6ff;
+ --signal: #f5c86b;
+ --border: rgba(120, 166, 255, 0.22);
+ --border-soft: rgba(99, 230, 190, 0.11);
+ --code: #05080d;
+ --code-text: #bcebdc;
+ --shadow: 0 34px 90px rgba(0,0,0,0.58);
+ }
+
+ * { box-sizing: border-box; }
+
+ body {
+ margin: 0;
+ min-height: 100vh;
+ font-family: 'DM Sans', sans-serif;
+ background:
+ radial-gradient(ellipse at 14% 15%, rgba(99,230,190,0.14) 0%, transparent 42%),
+ radial-gradient(ellipse at 88% 25%, rgba(120,166,255,0.12) 0%, transparent 40%),
+ radial-gradient(ellipse at 50% 95%, rgba(245,200,107,0.07) 0%, transparent 38%),
+ var(--bg);
+ color: var(--text);
+ line-height: 1.68;
+ }
+
+ .page {
+ width: min(1040px, 100%);
+ margin: 0 auto;
+ padding: 54px 24px 38px;
+ }
+
+ .hero {
+ position: relative;
+ padding: 42px 46px;
+ border: 1px solid var(--border);
+ border-radius: 6px 28px 28px 28px;
+ background: linear-gradient(145deg, rgba(17,28,45,0.96), rgba(7,11,18,0.95));
+ box-shadow: var(--shadow);
+ overflow: hidden;
+ }
+
+ .hero::before {
+ content: '';
+ position: absolute;
+ top: 0; left: 0; right: 0;
+ height: 3px;
+ background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--signal), transparent);
+ }
+
+ .hero-top {
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+ gap: 20px;
+ flex-wrap: wrap;
+ position: relative;
+ z-index: 1;
+ }
+
+ h1 {
+ margin: 0;
+ font-family: 'Playfair Display', serif;
+ font-size: clamp(1.85rem, 4vw, 3rem);
+ font-weight: 700;
+ letter-spacing: 0.015em;
+ line-height: 1.02;
+ color: var(--text);
+ }
+
+ .tagline {
+ margin: 12px 0 0;
+ font-size: clamp(0.98rem, 2vw, 1.14rem);
+ color: var(--muted);
+ font-weight: 300;
+ }
+
+ .tagline em {
+ color: var(--accent);
+ font-style: normal;
+ font-weight: 600;
+ }
+
+ .section {
+ margin-top: 20px;
+ padding: 32px 36px;
+ border: 1px solid var(--border-soft);
+ border-radius: 22px;
+ background: rgba(13,20,32,0.76);
+ box-shadow: 0 10px 34px rgba(0,0,0,0.30);
+ }
+
+ h2 {
+ margin: 0 0 12px;
+ font-size: 1.32rem;
+ letter-spacing: -0.025em;
+ font-weight: 650;
+ color: var(--text);
+ }
+
+ p { margin: 0 0 12px; }
+ p:last-child { margin-bottom: 0; }
+
+ a {
+ color: var(--accent);
+ text-decoration: none;
+ border-bottom: 1px solid rgba(99,230,190,0.35);
+ transition: color 0.15s, border-color 0.15s;
+ }
+ a:hover { color: #a6ffe7; border-bottom-color: #a6ffe7; }
+
+ .steps { list-style: none; padding: 0; margin: 18px 0 0; }
+ .steps li {
+ display: flex;
+ align-items: baseline;
+ gap: 14px;
+ padding: 11px 0;
+ border-bottom: 1px solid var(--border-soft);
+ font-size: 0.97rem;
+ }
+ .steps li:last-child { border-bottom: none; }
+ .steps .num {
+ font-family: 'Playfair Display', serif;
+ color: var(--accent);
+ font-size: 1.15rem;
+ min-width: 24px;
+ }
+
+ .pill-row {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 8px;
+ margin-top: 18px;
+ }
+
+ .pill {
+ display: inline-flex;
+ align-items: center;
+ padding: 7px 11px;
+ border-radius: 999px;
+ border: 1px solid var(--border-soft);
+ background: rgba(99,230,190,0.06);
+ color: #c7d5e8;
+ font-size: 0.82rem;
+ }
+
+ .btn-primary, .btn-outline {
+ display: inline-block;
+ appearance: none;
+ cursor: pointer;
+ font-family: 'DM Sans', sans-serif;
+ font-weight: 600;
+ font-size: 0.9rem;
+ border-radius: 999px;
+ transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s, border-color 0.2s;
+ }
+
+ .btn-primary {
+ background: linear-gradient(135deg, var(--accent), #9df5dc);
+ color: #06100d;
+ border: none;
+ padding: 12px 24px;
+ min-width: 164px;
+ }
+ .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+ .btn-primary:active { transform: translateY(0); }
+ .btn-primary.success { background: var(--accent-2); color: #061022; }
+
+ .btn-outline {
+ background: transparent;
+ color: var(--muted);
+ border: 1px solid var(--border);
+ padding: 8px 18px;
+ font-size: 0.85rem;
+ }
+ .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+ .toggle-link {
+ display: inline-block;
+ cursor: pointer;
+ color: var(--muted);
+ font-size: 0.85rem;
+ border-bottom: 1px solid rgba(139,155,176,0.4);
+ padding-bottom: 2px;
+ margin-bottom: 14px;
+ user-select: none;
+ transition: color 0.15s;
+ }
+ .toggle-link:hover { color: var(--text); }
+
+ .prompt-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: 16px;
+ margin-bottom: 12px;
+ flex-wrap: wrap;
+ }
+
+ .prompt-box {
+ white-space: pre-wrap;
+ overflow-x: auto;
+ padding: 24px;
+ border-radius: 15px;
+ border: 1px solid var(--border-soft);
+ background: var(--code);
+ color: var(--code-text);
+ font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+ font-size: 0.875rem;
+ line-height: 1.7;
+ display: none;
+ }
+
+ .about-box {
+ display: none;
+ margin-top: 24px;
+ padding: 24px;
+ border-radius: 17px;
+ border: 1px solid var(--border-soft);
+ background: var(--code);
+ color: #c9d8eb;
+ line-height: 1.75;
+ font-size: 0.95rem;
+ position: relative;
+ z-index: 1;
+ }
+ .about-box h2 { font-size: 1.15rem; margin-bottom: 14px; }
+
+ .deep-accent {
+ position: absolute;
+ right: 42px;
+ top: 50%;
+ transform: translateY(-50%);
+ opacity: 0.055;
+ pointer-events: none;
+ font-family: 'Playfair Display', serif;
+ font-size: 7.8rem;
+ font-weight: 700;
+ color: var(--accent);
+ line-height: 1;
+ user-select: none;
+ }
+
+ .note {
+ margin-top: 20px;
+ font-size: 0.8rem;
+ color: #66748a;
+ line-height: 1.55;
+ }
+
+ footer {
+ margin-top: 32px;
+ text-align: center;
+ color: #536174;
+ font-size: 0.82rem;
+ letter-spacing: 0.04em;
+ }
+
+ @media (max-width: 680px) {
+ .page { padding: 24px 14px 24px; }
+ .hero, .section { padding: 22px 20px; }
+ .btn-primary { width: 100%; }
+ .deep-accent { display: none; }
+ .prompt-header { flex-direction: column; align-items: flex-start; }
+ }
+</style>
+</head>
+<body>
+<main class="page">
+
+ <header class="hero">
+ <div class="deep-accent">DB</div>
+ <div class="hero-top">
+ <div>
+ <h1><span>DeepBrief</span> <span>Insight</span></h1>
+ <p class="tagline">Van complexe content naar <em>bruikbare inzichten</em></p>
+ </div>
+ <button class="btn-outline" id="aboutBtn" type="button">About</button>
+ </div>
+
+ <div class="about-box" id="aboutBox">
+ <h2>Wat is DeepBrief Insight?</h2>
+ <p>DeepBrief Insight zet complexe content om naar bruikbare inzichten, strategie en besluitvorming.</p>
+ <p>Lever artikelen, rapporten, beleidsdocumenten, transcripten, onderzoeken, notities of afbeeldingen aan en ontvang een compacte, analytische output met heldere takeaway en concrete vervolgopties.</p>
+ <p>De tool is geschikt voor strategische analyse, kritische toetsing, LinkedIn-content, beleidsreflectie en besluitvorming.</p>
+ <p>Anders dan gewone samenvattingstools doet DeepBrief Insight niet aan informatiecompressie maar aan betekenisextractie: met gefaseerde intake, analytische framing en expliciet onderscheid tussen feiten, interpretaties en aannames.</p>
+ </div>
+ </header>
+
+ <section class="section" aria-labelledby="uitleg-titel">
+ <h2 id="uitleg-titel">Toelichting</h2>
+ <p>Gebruik DeepBrief Insight om complexe content te vertalen naar compacte inzichten, strategische duiding en concrete vervolgstappen.</p>
+ <p>Kopieer de prompt en plak hem in je favoriete AI-tool. Lever daarna je content aan en geef aan welk analysedoel en detailniveau je wilt.</p>
+
+ <ol class="steps">
+ <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+ <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+ <li><span class="num">3</span>Geef je analysedoel en gewenste detailniveau op</li>
+ <li><span class="num">4</span>Lever je artikel, rapport, beleidsdocument, transcript, onderzoek, notitie of afbeelding aan</li>
+ <li><span class="num">5</span>Ontvang kern, onderbouwing, conclusie, takeaway en vervolgopties</li>
+ </ol>
+<p class="note">DeepBrief Insight analyseert alleen de aangeleverde content. Claims buiten de content worden vermeden; feiten, interpretaties en aannames worden expliciet onderscheiden.</p>
+ </section>
+
+ <section class="section" aria-labelledby="prompt-titel">
+ <div class="prompt-header">
+ <div>
+ <h2 id="prompt-titel">Prompt</h2>
+ </div>
+ <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+ </div>
+
+ <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+ <div class="prompt-box" id="promptText">Voor alle antwoorden in deze sessie: geen widgets, interactieve elementen of rich UI-componenten. Antwoord altijd in de taal van de gebruiker.
+
+DeepBrief Insight helpt professionals complexe content omzetten naar bruikbare inzichten, strategie en besluitvorming.
+
+Open met een korte introductie over DeepBrief Insight. Leg daarin uit welke content aangeleverd kan worden — zoals artikelen, rapporten, beleidsdocumenten, transcripten, onderzoeken, notities of afbeeldingen zoals infographics en screenshots — en wat de gebruiker terugkrijgt: een compacte, analytische output met heldere takeaway en concrete vervolgopties. Stel daarna deze vraag. Wacht op antwoord voordat je verdergaat:
+
+Wat wil je uit deze analyse halen en wat is het gewenste detailniveau? Bijvoorbeeld: strategisch overzicht, concrete aanbevelingen of kritische toetsing — en bij voorkeur een maximaal aantal woorden. Typ geef voorbeeld als je wilt zien hoe anderen deze vraag beantwoorden.
+
+Als de gebruiker "geef voorbeeld" typt, geef dan drie concrete voorbeeldantwoorden die passen bij verschillende gebruikersprofielen — zoals een beleidsmedewerker, een strategisch adviseur en een communicatieprofessional. Keer daarna terug naar de oorspronkelijke vraag.
+
+Bij een vaag antwoord: stel één gerichte vervolgvraag. Ga nooit verder op basis van aannames.
+
+Vraag daarna de content op. Als de content te fragmentarisch of onvolledig is voor zinvolle analyse, vraag dan om aanvulling. Behandel meerdere documenten als zelfstandige analyses tenzij de gebruiker vergelijking vraagt.
+
+Bij lage-kwaliteit bronnen — feitelijk onjuist, intern inconsistent of sterk gekleurd — benoem dit expliciet voor de analyse begint. Geef aan welke delen bruikbaar zijn en welke niet, en pas de betrouwbaarheidsweging in de analyse daarop aan.
+
+Binnen een sessie mag je verbanden leggen tussen eerder geanalyseerde documenten als de gebruiker daarom vraagt of als een verband direct relevant is voor de lopende analyse. Benoem altijd expliciet wanneer je naar eerder materiaal verwijst.
+
+Analyseer op basis van inhoudstype, context en opgegeven doelstelling. Schrijfstijl: zakelijk en direct. Structuur: kern, onderbouwing, conclusie. Onderscheid feiten, interpretaties en aannames expliciet — markeer interpretaties en aannames actief in de lopende tekst met een signaalwoord zoals "interpretatie" of "aanname". Geen claims buiten de aangeleverde content. Parafraseer bij voorkeur en citeer alleen als de exacte formulering analytisch onvervangbaar is. Analyseer analytisch en gebruik passende framing op basis van het inhoudstype en het doel van de gebruiker — benoem onderliggende mechanismen, patronen en implicaties waar relevant. Woordlimiet: 300 woorden voor globale analyse, 600 voor gedetailleerde analyse, tenzij anders opgegeven. Overschrijd de woordlimiet alleen op expliciete verzoek van de gebruiker.
+
+Sluit elke analyse altijd af met de volgende twee elementen, ongeacht de outputvorm of aanvullende vereisten zoals een titel of afsluitende vraag:
+
+Belangrijkste takeaway: één zin.
+
+Gevolgd door drie tot vijf contextafhankelijke vervolgopties die aansluiten op de analyse en het doel van de gebruiker. Voeg bij publicatiegerichte output altijd een vervolgoptie toe: controleer en finaliseer voor publicatie.
+
+Als de gebruiker het doel na twee uitwisselingen nog niet heeft verduidelijkt, kies dan zelf een redelijk startpunt en benoem die aanname expliciet.</div>
+ </section>
+
+ <footer>v1.0 · mei 2026 · DeepBrief Insight</footer>
+</main>
+
+<script>
+ const promptText = document.getElementById('promptText');
+ const toggleBtn = document.getElementById('toggleBtn');
+ const rawPrompt = promptText.textContent.trim();
+
+ function togglePrompt() {
+ const isHidden = getComputedStyle(promptText).display === 'none';
+ promptText.style.display = isHidden ? 'block' : 'none';
+ toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+ }
+
+ toggleBtn.addEventListener('click', togglePrompt);
+ toggleBtn.addEventListener('keydown', (e) => {
+ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+ });
+
+ const copyBtn = document.getElementById('copyBtn');
+ copyBtn.addEventListener('click', async () => {
+ try {
+ await navigator.clipboard.writeText(rawPrompt);
+ copyBtn.textContent = 'Gekopieerd ✓';
+ copyBtn.classList.add('success');
+ setTimeout(() => {
+ copyBtn.textContent = 'Kopieer prompt';
+ copyBtn.classList.remove('success');
+ }, 2400);
+ } catch {
+ promptText.style.display = 'block';
+ toggleBtn.textContent = '▼ Verberg prompt';
+ const range = document.createRange();
+ range.selectNodeContents(promptText);
+ const sel = window.getSelection();
+ sel.removeAllRanges();
+ sel.addRange(range);
+ copyBtn.textContent = 'Kopieer handmatig';
+ }
+ });
+
+ const aboutBtn = document.getElementById('aboutBtn');
+ const aboutBox = document.getElementById('aboutBox');
+ aboutBtn.addEventListener('click', () => {
+ const hidden = getComputedStyle(aboutBox).display === 'none';
+ aboutBox.style.display = hidden ? 'block' : 'none';
+ aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+ });
+</script>
+</body>
+</html>
