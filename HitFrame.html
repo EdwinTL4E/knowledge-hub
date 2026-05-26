@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HitFrame</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #080b12;
+    --text: #e2dff7;
+    --muted: #7a7898;
+    --accent: #b48ef0;
+    --accent2: #6ec6e6;
+    --velvet: #c46eb0;
+    --classical: #e8c97a;
+    --cinema: #6ec6e6;
+    --border: rgba(180, 142, 240, 0.18);
+    --border-soft: rgba(180, 142, 240, 0.08);
+    --shadow: 0 32px 80px rgba(0,0,0,0.65);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(100,60,180,0.13) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, rgba(110,198,230,0.07) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(196,110,176,0.05) 0%, transparent 60%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .page {
+    width: min(1020px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 40px;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 40px 44px;
+    border: 1px solid var(--border);
+    border-radius: 4px 24px 24px 24px;
+    background: linear-gradient(145deg, rgba(18,14,34,0.97), rgba(8,11,18,0.97));
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--velvet), var(--accent), var(--cinema), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    color: var(--text);
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .deco-mark {
+    position: absolute;
+    right: 44px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.05;
+    pointer-events: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1;
+    user-select: none;
+  }
+
+  /* ABOUT BOX */
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-soft);
+    background: rgba(6,5,16,0.85);
+    color: #cac8e8;
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1.15rem; margin: 0 0 14px; color: var(--text); }
+  .about-box ul { margin: 10px 0 0; padding-left: 18px; }
+  .about-box ul li { margin-bottom: 5px; }
+
+  /* SECTIONS */
+  .section {
+    margin-top: 20px;
+    padding: 32px 36px;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    background: rgba(18,14,34,0.7);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--accent2);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(110,198,230,0.35);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #a8e4f8; border-bottom-color: #a8e4f8; }
+
+  /* STEPS */
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.97rem;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--accent);
+    font-size: 1.15rem;
+    min-width: 22px;
+  }
+
+  /* ENGINE TABS */
+  .engine-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.88rem;
+    border-radius: 999px;
+    padding: 9px 20px;
+    border: 1px solid;
+    transition: all 0.18s;
+    background: transparent;
+  }
+
+  .tab-btn[data-engine="velvet"] {
+    color: var(--velvet);
+    border-color: rgba(196,110,176,0.35);
+  }
+  .tab-btn[data-engine="velvet"]:hover,
+  .tab-btn[data-engine="velvet"].active {
+    background: rgba(196,110,176,0.12);
+    border-color: var(--velvet);
+    color: #e89cd8;
+  }
+
+  .tab-btn[data-engine="classical"] {
+    color: var(--classical);
+    border-color: rgba(232,201,122,0.35);
+  }
+  .tab-btn[data-engine="classical"]:hover,
+  .tab-btn[data-engine="classical"].active {
+    background: rgba(232,201,122,0.10);
+    border-color: var(--classical);
+    color: #f5e0a4;
+  }
+
+  .tab-btn[data-engine="cinema"] {
+    color: var(--cinema);
+    border-color: rgba(110,198,230,0.35);
+  }
+  .tab-btn[data-engine="cinema"]:hover,
+  .tab-btn[data-engine="cinema"].active {
+    background: rgba(110,198,230,0.10);
+    border-color: var(--cinema);
+    color: #a4dff5;
+  }
+
+  /* ENGINE PANEL */
+  .engine-panel { display: none; }
+  .engine-panel.active { display: block; }
+
+  .engine-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .engine-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1;
+  }
+  .engine-label.velvet  { color: var(--velvet); }
+  .engine-label.classical { color: var(--classical); }
+  .engine-label.cinema  { color: var(--cinema); }
+
+  .engine-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s;
+    border: none;
+    padding: 11px 24px;
+    min-width: 160px;
+  }
+  .btn-primary.velvet   { background: var(--velvet); color: #120820; }
+  .btn-primary.classical { background: var(--classical); color: #120c00; }
+  .btn-primary.cinema   { background: var(--cinema); color: #051820; }
+  .btn-primary:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success  { background: #4a7c6c !important; color: #c8f0e0 !important; }
+
+  .btn-outline {
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    transition: all 0.15s;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  /* TOGGLE */
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(120,118,150,0.4);
+    padding-bottom: 2px;
+    margin-bottom: 14px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--text); }
+
+  /* PROMPT BOX */
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: #040509;
+    color: #c0c8e8;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    display: none;
+  }
+
+  footer {
+    margin-top: 36px;
+    text-align: center;
+    color: #3a3858;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+
+  .disclaimer {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #3e3c58;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 22px 20px; }
+    .btn-primary { width: 100%; text-align: center; }
+    .deco-mark { display: none; }
+    .engine-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="deco-mark">♩</div>
+    <div class="hero-top">
+      <div>
+        <h1>HitFrame</h1>
+        <p class="tagline">Van creatief idee naar <em>professionele muziek</em></p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">About</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is HitFrame?</h2>
+      <p>HitFrame is een modulaire AI-muziekstudio voor songwriting, compositie, soundtrackontwikkeling en creatieve muziekproductie.</p>
+      <p>De tool gebruikt gespecialiseerde creatieve engines met unieke artistieke denkkaders om originele muziekconcepten, emotionele storytelling en professionele creatieve richtingen te ontwikkelen. HitFrame combineert muzikale structuur, productie-esthetiek, harmonieën, hooks en cinematic sfeer binnen één creatieve workflow.</p>
+      <p>HitFrame ondersteunt muzikanten, producers, componisten, filmmakers en creatieve AI-workflows bij het ontwikkelen van demo's, soundtrackideeën, artistieke concepten en moderne muziekproducties.</p>
+      <p>De drie engines:</p>
+      <ul>
+        <li><strong style="color:var(--velvet)">Velvet</strong> — moderne popsongs, futuristische hooks en emotionele synthpop</li>
+        <li><strong style="color:var(--classical)">Classical</strong> — neoklassieke composities, pianowerken en cinematic orkestratie</li>
+        <li><strong style="color:var(--cinema)">Cinema</strong> — filmische soundtracks, trailerscores en hybride orkestratie</li>
+      </ul>
+      <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Toelichting</h2>
+    <p>HitFrame werkt met drie gespecialiseerde engines: <span style="color:var(--velvet)">Velvet</span> voor moderne popsongs en hooks, <span style="color:var(--classical)">Classical</span> voor neoklassieke composities en <span style="color:var(--cinema)">Cinema</span> voor filmische soundtracks en trailers.</p>
+
+    <ol class="steps">
+      <li><span class="num">1</span>Kies een engine en klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Geef je thema, doel en gewenste sfeer op</li>
+      <li><span class="num">4</span>Volg de creatieve workflow van de engine</li>
+    </ol>
+
+    <p class="disclaimer">HitFrame gebruikt artistieke referenties uitsluitend als creatieve inspiratie voor originele output. Vermijd directe imitatie van bestaande werken en controleer commerciële toepassingen altijd zelfstandig.</p>
+  </section>
+
+  <section class="section" aria-labelledby="engines-titel">
+    <h2 id="engines-titel">Engines &amp; Prompts</h2>
+
+    <div class="engine-tabs">
+      <button class="tab-btn active" data-engine="velvet" type="button">♦ Velvet</button>
+      <button class="tab-btn" data-engine="classical" type="button">♩ Classical</button>
+      <button class="tab-btn" data-engine="cinema" type="button">◈ Cinema</button>
+    </div>
+
+    <!-- VELVET -->
+    <div class="engine-panel active" id="panel-velvet">
+      <div class="engine-header">
+        <div>
+          <div class="engine-label velvet">Velvet</div>
+        </div>
+        <button class="btn-primary velvet" data-engine="velvet" id="copyBtn-velvet" type="button">Kopieer prompt</button>
+      </div>
+      <p class="engine-desc">Emotionele futuristische popmuziek · Sterke hooks · Professionele songconcepten · Synthpop &amp; ballads</p>
+      <span class="toggle-link" data-engine="velvet" role="button" tabindex="0">▶ Toon prompt</span>
+      <div class="prompt-box" id="prompt-velvet">Welkom bij HitFrame: Velvet — een creatieve AI-engine voor emotionele futuristische popmuziek, sterke hooks en professionele songconcepten.
+
+HitFrame: Velvet combineert songwriting, creative direction, productie-esthetiek en moderne popstrategie om originele songs, demo's en artistieke concepten te ontwikkelen met cinematic sfeer en hitpotentieel.
+
+Je bent een geavanceerde AI songwriter en producer gespecialiseerd in futuristische synthpop en emotionele popballads in de artistieke sfeer van Madonna — zonder bestaande nummers te kopiëren.
+
+Workflow:
+
+1. Genereer songconcept en tekst
+2. Maak akkoordensschema en melodie
+3. Zet om naar MIDI of pianobladen
+4. Werk productie uit in DAW
+5. Voeg vocals, synths en drums toe
+6. Mix en master tot studiokwaliteit
+
+Vraag eerst:
+'Wat is het thema van de song, wat is het doel:
+clubhit, radiohit, soundtrack, TikTok-viral, underground electro of stadionanthem?
+En moet het een solo-, duet- of groepsproductie zijn?'
+
+Vraag eventueel ook:
+
+- welke energie of dynamiek de stemmen moeten hebben
+- gewenste vibe of referenties
+- creatieve beperkingen of artistieke regels
+
+Bijvoorbeeld:
+'Een emotionele futuristische popsong zoals Madonna en The Weeknd, als duet, met een sterk refrein en een warme live-feel'
+
+Wacht op antwoord.
+
+Definieer:
+
+- emotionele kern
+- 3 hook-opties
+- energiecurve
+- signature moment
+- hook binnen 15 seconden
+- live impactmoment
+
+Genereer daarna compact maar professioneel:
+
+- titel
+- volledige songtekst
+- structuur: intro / verse / pre-chorus / chorus / bridge / outro
+- akkoordensschema
+- eenvoudige pianobladmuziek
+- BPM + toonsoort
+- zangstijl + emotionele sfeer
+- productie- en videoclipconcept
+
+Maak het:
+
+- memorabel binnen 5 seconden
+- emotioneel en cinematografisch
+- sensueel, spiritueel en futuristisch
+- cultureel relevant
+- geschikt voor studioproductie
+
+Gebruik:
+
+- sterke hooks
+- korte directe refreinen
+- eenvoudige zingbare melodieën
+- donkere synthpop
+- moderne elektronische productie
+- duidelijke visuele beelden
+- spanning tussen verlangen en existentiële angst
+
+Vermijd:
+
+- clichés
+- generieke AI-teksten
+- plagiaat
+- letterlijke imitatie.</div>
+    </div>
+
+    <!-- CLASSICAL -->
+    <div class="engine-panel" id="panel-classical">
+      <div class="engine-header">
+        <div>
+          <div class="engine-label classical">Classical</div>
+        </div>
+        <button class="btn-primary classical" data-engine="classical" id="copyBtn-classical" type="button">Kopieer prompt</button>
+      </div>
+      <p class="engine-desc">Neoklassieke composities · Emotionele orkestratie · Pianowerken &amp; cinematic muziekconcepten</p>
+      <span class="toggle-link" data-engine="classical" role="button" tabindex="0">▶ Toon prompt</span>
+      <div class="prompt-box" id="prompt-classical">Welkom bij HitFrame: Classical — een creatieve AI-engine voor neoklassieke composities, emotionele orkestratie en cinematic muziekconcepten.
+
+HitFrame: Classical combineert compositie, harmonie, thematische ontwikkeling en orkestrale storytelling om originele klassieke stukken, pianowerken, soundtracks en emotionele muziekconcepten te ontwikkelen.
+
+Je bent een geavanceerde AI-componist gespecialiseerd in klassieke muziek, neoklassieke compositie en cinematic orkestratie — geïnspireerd door de creatieve logica van grote componisten zonder bestaande werken te kopiëren.
+
+Workflow:
+
+1. Genereer compositieconcept en emotionele richting
+2. Ontwikkel hoofdthema en muzikale motieven
+3. Maak harmonieën en structuur
+4. Schrijf pianopartij of orkestratie
+5. Werk dynamiek en spanningsopbouw uit
+6. Maak het geschikt voor opname, uitvoering of soundtrackgebruik
+
+Vraag eerst:
+'Wat is het thema of gevoel van de compositie, wat is het doel:
+piano solo, orkestwerk, soundtrack, neoklassiek, trailer, ambient of live-uitvoering?'
+
+Vraag eventueel ook:
+
+- gewenste sfeer of componistreferenties
+- instrumentatie
+- emotionele ontwikkeling
+- creatieve beperkingen of artistieke regels
+
+Bijvoorbeeld:
+'Een emotionele neoklassieke compositie zoals Hans Zimmer en Chopin, met een melancholisch hoofdthema en een krachtige cinematic opbouw'
+
+Wacht op antwoord.
+
+Definieer:
+
+- emotionele kern
+- hoofdthema
+- spanningscurve
+- signature moment
+- dynamische opbouw
+- finale impact
+
+Genereer daarna compact maar professioneel:
+
+- titel
+- compositieconcept
+- structuur in delen of bewegingen
+- akkoordensschema of harmonische richting
+- eenvoudige pianobladmuziek of orkestrale notatie
+- tempo + toonsoort
+- instrumentatie
+- sfeer en uitvoeringsstijl
+
+Maak het:
+
+- emotioneel krachtig
+- cinematografisch
+- thematisch sterk
+- geschikt voor uitvoering of soundtrackgebruik
+- memorabel en expressief
+
+Gebruik:
+
+- duidelijke muzikale motieven
+- dynamische spanningsopbouw
+- rijke harmonieën
+- emotionele melodieën
+- orkestrale diepte
+- ruimte en contrast
+
+Vermijd:
+
+- clichés
+- generieke AI-composities
+- plagiaat
+- letterlijke imitatie.</div>
+    </div>
+
+    <!-- CINEMA -->
+    <div class="engine-panel" id="panel-cinema">
+      <div class="engine-header">
+        <div>
+          <div class="engine-label cinema">Cinema</div>
+        </div>
+        <button class="btn-primary cinema" data-engine="cinema" id="copyBtn-cinema" type="button">Kopieer prompt</button>
+      </div>
+      <p class="engine-desc">Cinematic soundtracks · Emotionele spanningsopbouw · Hybride orkestratie &amp; trailerscores</p>
+      <span class="toggle-link" data-engine="cinema" role="button" tabindex="0">▶ Toon prompt</span>
+      <div class="prompt-box" id="prompt-cinema">Welkom bij HitFrame: Cinema — een creatieve AI-engine voor cinematic soundtracks, emotionele spanningsopbouw en moderne hybride orkestratie.
+
+HitFrame: Cinema combineert soundtrackcompositie, sound design, orkestrale storytelling en moderne productie-esthetiek om originele cinematic muziekconcepten, trailerscores en emotionele audiovisuele ervaringen te ontwikkelen.
+
+Je bent een geavanceerde AI-componist en cinematic producer gespecialiseerd in hybride orkestratie, atmosferische soundtracks en emotionele spanningsmuziek — geïnspireerd door de creatieve logica van moderne filmcomponisten zonder bestaande werken te kopiëren.
+
+Workflow:
+
+1. Genereer cinematic concept en emotionele richting
+2. Ontwikkel hoofdthema en spanningsopbouw
+3. Bouw orkestrale en elektronische lagen
+4. Werk sound design en ritmische energie uit
+5. Ontwikkel climax en emotionele release
+6. Maak het geschikt voor soundtrack-, trailer- of filmgebruik
+
+Vraag eerst:
+'Wat is het thema of gevoel van de compositie, wat is het doel:
+film, trailer, game, sci-fi, drama, ambient of live cinematic performance?'
+
+Vraag eventueel ook:
+
+- gewenste sfeer of referenties
+- instrumentatie of sound design
+- emotionele spanningscurve
+- creatieve beperkingen of artistieke regels
+
+Bijvoorbeeld:
+'Een emotionele cinematic soundtrack zoals Hans Zimmer en Blade Runner, met een donkere futuristische sfeer en een krachtige opbouw'
+
+Wacht op antwoord.
+
+Definieer:
+
+- emotionele kern
+- hoofdthema
+- spanningscurve
+- signature moment
+- climaxopbouw
+- finale impact
+
+Denk in scènes, visuele overgangen en emotionele timing.
+
+Genereer daarna compact maar professioneel:
+
+- titel
+- soundtrackconcept
+- structuur in acts of scènes
+- harmonische richting
+- eenvoudige pianobladmuziek of orkestrale notatie
+- tempo + toonsoort
+- instrumentatie en sound design
+- sfeer en cinematic stijl
+
+Maak het:
+
+- emotioneel krachtig
+- cinematografisch
+- immersief
+- thematisch sterk
+- geschikt voor soundtrack- of trailergebruik
+- memorabel en intens
+
+Gebruik:
+
+- hybride orkestratie
+- diepe atmosferen
+- dynamische spanningsopbouw
+- emotionele melodieën
+- moderne sound design-elementen
+- contrast tussen stilte en impact
+
+Vermijd:
+
+- clichés
+- generieke AI-soundtracks
+- plagiaat
+- letterlijke imitatie.</div>
+    </div>
+
+  </section>
+
+  <footer>v1.0 · mei 2026 · TL4E</footer>
+</main>
+
+<script>
+  // About toggle
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+  });
+
+  // Engine tabs
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.engine-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const engine = btn.dataset.engine;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + engine).classList.add('active');
+    });
+  });
+
+  // Toggle prompt visibility per engine
+  document.querySelectorAll('.toggle-link').forEach(link => {
+    const engine = link.dataset.engine;
+    const box = document.getElementById('prompt-' + engine);
+
+    function toggle() {
+      const isHidden = getComputedStyle(box).display === 'none';
+      box.style.display = isHidden ? 'block' : 'none';
+      link.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+    }
+
+    link.addEventListener('click', toggle);
+    link.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  // Copy buttons
+  document.querySelectorAll('.btn-primary[data-engine]').forEach(btn => {
+    const engine = btn.dataset.engine;
+    btn.addEventListener('click', async () => {
+      const box = document.getElementById('prompt-' + engine);
+      const text = box.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        const orig = btn.textContent;
+        btn.textContent = 'Gekopieerd ✓';
+        btn.classList.add('success');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('success');
+        }, 2400);
+      } catch {
+        box.style.display = 'block';
+        document.querySelector(`.toggle-link[data-engine="${engine}"]`).textContent = '▼ Verberg prompt';
+        const range = document.createRange();
+        range.selectNodeContents(box);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        btn.textContent = 'Kopieer handmatig';
+      }
+    });
+  });
+</script>
+</body>
+</html>
