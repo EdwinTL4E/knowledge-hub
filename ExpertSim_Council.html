@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ExpertSim Council</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0c0f0a;
+    --text: #e8e4dc;
+    --muted: #8a8878;
+    --accent: #d4b36a;
+    --green: #2f4f7a;
+    --green-soft: rgba(47,79,122,0.18);
+    --border: rgba(201, 185, 122, 0.18);
+    --border-soft: rgba(201, 185, 122, 0.08);
+    --shadow: 0 32px 80px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(47,79,122,0.16) 0%, transparent 45%),
+      radial-gradient(ellipse at 90% 80%, rgba(201,185,122,0.08) 0%, transparent 40%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .page {
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 40px 44px;
+    border: 1px solid var(--border);
+    border-radius: 4px 24px 24px 24px;
+    background: linear-gradient(145deg, rgba(18,22,32,0.96), rgba(12,15,10,0.95));
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--accent), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 36px;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    background: rgba(18,22,32,0.78);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,185,122,0.35);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #e8d9a0; border-bottom-color: #e8d9a0; }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.97rem;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+    font-size: 1.1rem;
+    min-width: 22px;
+  }
+
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0c0f0a;
+    border: none;
+    padding: 12px 24px;
+    min-width: 160px;
+  }
+  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success { background: var(--green); color: #d4f0de; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(138,136,120,0.4);
+    padding-bottom: 2px;
+    margin-bottom: 14px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--text); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: #090d14;
+    color: #d7deef;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    display: none;
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-soft);
+    background: #090d14;
+    color: #d7deef;
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1.15rem; margin-bottom: 14px; }
+
+  .council-accent {
+    position: absolute;
+    right: 44px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.06;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1;
+    user-select: none;
+  }
+
+  footer {
+    margin-top: 32px;
+    text-align: center;
+    color: #4a4a3e;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 22px 20px; }
+    .btn-primary { width: 100%; }
+    .council-accent { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="council-accent">AI</div>
+    <div class="hero-top">
+      <div>
+        <h1>ExpertSim Council</h1>
+        <p class="tagline">Jij stuurt het gesprek als <em>voorzitter van een AI-expertpanel</em></p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">About</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is ExpertSim Council?</h2>
+      <p>ExpertSim Council laat je gesprekken voeren met gesimuleerde expertpanels rond maatschappelijke, strategische en menselijke vraagstukken.</p>
+      <p>Iedere sessie brengt verschillende perspectieven samen in één dynamische dialoogruimte. De gebruiker stuurt het gesprek als voorzitter en bepaalt zelf de richting: verdieping, confrontatie of oplossingsgericht denken.</p>
+      <p>Zo ontstaat geen simpel rollenspel, maar een ruimte voor analyse, reflectie en collectieve intelligentie.</p>
+
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Toelichting</h2>
+    <p>Gebruik ExpertSim Council om thema’s te verkennen via een dynamisch expertpanel. Jij bepaalt als voorzitter welke richting het gesprek opgaat en kunt tijdens het debat experts toevoegen, vervangen of verwijderen.</p>
+    <p>Bevalt een expert niet of mis je een perspectief? Vraag tijdens het gesprek eenvoudig om experts toe te voegen, te vervangen of uit het panel te verwijderen.</p>
+    <p>Standaard werkt ExpertSim Council met Nederlandse experts, maar je kunt ook vragen om internationale experts, historische denkers of specifieke professionele rollen.</p>
+    
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Noem één concreet thema</li>
+      <li><span class="num">4</span>Kies als voorzitter de richting van het gesprek</li>
+    </ol>
+
+    <p style="margin-top:20px;font-size:0.8rem;color:#4a4a3e;line-height:1.5;">
+      Gebaseerd op publieke informatie en AI-simulatie. Geen authentieke communicatie of letterlijke representatie van echte personen.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+    <div class="prompt-box" id="promptText">Welkom bij ExpertSim Council.
+
+Je bent een ervaren debatmoderator binnen ExpertSim Council, een AI-panel waarin experts realistisch worden gesimuleerd. Vraag de gebruiker eerst om een concreet thema, dilemma of vraagstuk. Zodra het onderwerp bekend is, identificeer je via internet de drie meest prominente en relevante Nederlandse experts op dit gebied, bij voorkeur met verschillende perspectieven of disciplines. Laat iedere expert zich kort introduceren (max. 100 woorden per expert) vanuit zijn of haar specifieke expertise.
+
+Start nog niet direct het debat. Vraag de gebruiker eerst om als voorzitter richting te geven aan het gesprek en geef daarbij drie concrete vervolgopties, bijvoorbeeld verdieping, confrontatie tussen perspectieven of oplossingsrichtingen.
+
+Start pas daarna het panelgesprek. Zorg dat iedere expert consistent in zijn of haar rol blijft, inhoudelijk reageert op de anderen en dat iedere debatronde eindigt met een korte samenvatting en nieuwe suggesties voor vervolgvragen.
+
+De gebruiker kan tijdens het gesprek experts toevoegen, vervangen of verwijderen, en kan ook vragen om internationale experts, historische denkers of specifieke professionele rollen.</div>
+  </section>
+
+  <footer>v1.0 · mei 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = getComputedStyle(promptText).display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+  });
+</script>
+</body>
+</html>
