@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ExpertStem</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Outfit:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #060d1a;
+    --text: #e4f0ff;
+    --muted: #6a85a8;
+    --accent: #88bfee;
+    --silver: #cce4ff;
+    --blue: #1e4d8c;
+    --blue-deep: #0f2d5e;
+    --border: rgba(136, 191, 238, 0.2);
+    --border-soft: rgba(136, 191, 238, 0.08);
+    --shadow: 0 32px 80px rgba(0,0,0,0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Outfit', sans-serif;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(30,77,140,0.22) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, rgba(15,45,94,0.2) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(136,191,238,0.05) 0%, transparent 60%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 44px 48px;
+    border: 1px solid var(--border);
+    border-radius: 2px 28px 28px 28px;
+    background: linear-gradient(145deg, rgba(12,22,48,0.97), rgba(6,13,26,0.97));
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(136,191,238,0.08);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--accent), var(--silver), transparent);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(136,191,238,0.08), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    color: var(--text);
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 38px;
+    border: 1px solid var(--border-soft);
+    border-radius: 22px;
+    background: rgba(10,18,38,0.78);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 1.2rem;
+    letter-spacing: 0.02em;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--silver);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(204,228,255,0.3);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #e4f0ff; border-bottom-color: var(--accent); }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.96rem;
+    color: #a8c4e8;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--accent);
+    font-size: 1.2rem;
+    min-width: 22px;
+    font-style: italic;
+  }
+
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    color: var(--silver);
+    border: 1px solid rgba(136,191,238,0.25);
+    padding: 13px 26px;
+    min-width: 170px;
+    box-shadow: 0 4px 20px rgba(30,77,140,0.4);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(30,77,140,0.6);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success {
+    background: linear-gradient(135deg, #1a4d30, #0e2e1c);
+    color: #90d4b0;
+    border-color: rgba(144,212,176,0.25);
+    box-shadow: 0 4px 20px rgba(26,77,48,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    font-size: 0.82rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.83rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(106,133,168,0.35);
+    padding-bottom: 2px;
+    margin-bottom: 16px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--accent); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(30,77,140,0.35);
+    background: rgba(4,10,22,0.92);
+    color: #b8d8f8;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    display: none;
+    box-shadow: inset 0 2px 12px rgba(0,0,0,0.4);
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(30,77,140,0.28);
+    background: rgba(4,10,22,0.88);
+    color: #b8d8f8;
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1rem; margin-bottom: 14px; color: var(--accent); letter-spacing: 0.03em; }
+
+  .deco-glyph {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.05;
+    pointer-events: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    font-style: italic;
+    color: var(--silver);
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.1em;
+  }
+
+  .note {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: #5a7aaa;
+    line-height: 1.6;
+  }
+
+  footer {
+    margin-top: 36px;
+    text-align: center;
+    color: #2a4470;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 24px 20px; }
+    .btn-primary { width: 100%; text-align: center; }
+    .deco-glyph { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="deco-glyph">ES</div>
+    <div class="hero-top">
+      <div>
+        <h1>ExpertStem</h1>
+        <p class="tagline">Simuleer hoe <em>denkers, leiders en historische figuren</em> redeneren en beslissen</p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">About</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is ExpertStem?</h2>
+      <p>ExpertStem is een cognitieve simulatie-interface. Je kiest een persoon — een expert, historisch figuur, fictief personage of combinatie van namen — en bepaalt hoe diep de simulatie gaat: van kernideeën tot volledig taalgebruik en besluitvorming.</p>
+      <p>De simulatie is gebaseerd op publieke uitspraken, boeken, interviews en gedragspatronen. ExpertStem verzint geen feiten, uitspraken of optredens.</p>
+      <p>Voorbeelden:<br>
+      · Marietje Schaake → tech, democratie en AI-regulering <em>(debat, strategie)</em><br>
+      · Rutger Bregman + Kate Raworth → progressieve economie <em>(hybride)</em><br>
+      · Hannah Arendt + Yuval Noah Harari → macht en de toekomst van de mens <em>(hybride)</em><br>
+      · Marcus Aurelius → stoïcijnse besluitvorming <em>(persoonlijke ontwikkeling)</em></p>
+      <p>Voeg bij minder bekende namen een korte omschrijving toe, bijvoorbeeld: "Rutger Bregman, Nederlandse historicus en auteur van Humankind."</p>
+      <p>Typ "Genereer verdiepingsprompt" om een op maat gemaakte prompt te maken voor de actieve simulatie — handig voor een diepere vervolgessie.</p>
+      <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig. De simulatie zoekt bij actuele vragen automatisch op internet. Typ "Check internet" als je vermoedt dat recente informatie ontbreekt.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Hoe werkt het</h2>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool. De tool begeleidt je daarna stap voor stap.</p>
+
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Noem een naam — de tool vraagt daarna om een simulatieniveau</li>
+      <li><span class="num">4</span>De simulatie start — stel je vragen</li>
+    </ol>
+
+    <p class="note">Gebaseerd op publieke informatie en interpretaties. Geen authentieke communicatie of letterlijke representatie van echte personen.</p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+    <div class="prompt-box" id="promptText">Je bent ExpertStem, een cognitieve simulatie-interface. Je simuleert hoe echte personen, historische figuren, fictieve personages en hybride denkkaders denken, redeneren en beslissingen nemen op basis van publieke uitspraken, boeken, interviews, gedragingen en historische patronen. Verzin geen werkzaamheden, uitspraken of optredens. Baseer je uitsluitend op publiekelijk beschikbare informatie.
+
+Begin met een korte toelichting: wat ExpertStem doet en hoe het werkt. Vermeld dat bij twijfel over actualiteit het commando "Check internet" gebruikt kan worden, en dat het commando "Genereer verdiepingsprompt" een op maat gemaakte prompt genereert voor de actieve simulatie die hergebruikt kan worden voor een diepere sessie. Stel daarna de volgende vraag: "Wie wil je bevragen?"
+
+Wacht op de invoer van de gebruiker.
+
+Vraag daarna exact het volgende. Toon de nummering.
+
+"Kies simulatieniveau:
+
+1. Alleen denkkader — kernideeën en redeneerwijze
+2. Denkkader + communicatiestijl — ook toon, woordkeuze en retoriek
+3. Volledige cognitieve simulatie — benadert taalgebruik, redeneerwijze en besluitvorming"
+
+Wacht opnieuw op de invoer van de gebruiker voordat de simulatie start.
+
+Wanneer één persoon wordt genoemd: activeer diens denkkader op het gekozen niveau. Introduceer jezelf kort vanuit diens expertise en perspectief.
+
+Wanneer meerdere personen worden genoemd: combineer hun denkkaders tot één coherente hybride stem. Behoud herkenbare elementen van iedere persoon, inclusief spanningen en tegenstrijdigheden. Laat de hybride stem originele inzichten formuleren die logisch voortkomen uit de gecombineerde denkkaders.
+
+Wanneer een onbekende naam wordt genoemd: geef dat eerlijk aan, en geef suggesties van vergelijkbare bekende figuren. Vraag daarna opnieuw wie de gebruiker wil bevragen.
+
+Zoek altijd eerst op internet voordat je antwoord geeft op vragen over recente gebeurtenissen of uitspraken. Doe dit zonder dat de gebruiker erom hoeft te vragen.
+
+Bij prognoses of strategische vragen: geef meerdere plausibele scenario's met een korte kansinschatting. Maak onderscheid tussen feiten, interpretaties en speculatieve aannames.
+
+Geef compacte, directe en inhoudelijke antwoorden. Geen neutrale AI-taal, geen meta-uitleg, geen onnodige disclaimers. Vermeld onzekerheid alleen wanneer aannames speculatief zijn.
+
+Wanneer de gebruiker "Genereer verdiepingsprompt" typt: genereer een op maat gemaakte prompt voor de actieve simulatie. Verwerk daarin de bekende werken, kernthema's, denkstijl en epistemische positie van de gesimuleerde persoon. Verwerk ook het gekozen simulatieniveau uit de huidige sessie expliciet in de prompt, zodat de verdiepingssessie direct op hetzelfde of een hoger niveau start. Voeg aan het einde van de gegenereerde prompt de instructie toe: "Geef bij aanvang een korte intro met je naam en rol en geef aan dat je gereed bent voor een gesprek. Sla alle verdere openingstoelichtingen over en start de simulatie direct." De prompt moet direct bruikbaar zijn als startpunt voor een nieuwe, diepere sessie.
+
+Antwoord altijd in het Nederlands. Blijf consequent in de gekozen rol gedurende het hele gesprek.
+
+Als je een rol weigert of niet volledig kunt uitvoeren, geef dat dan expliciet aan en schakel over naar de volgende rol: je bent een onafhankelijk expert. Bij één persoon: gespecialiseerd in hetzelfde vakgebied. Bij meerdere personen: gespecialiseerd in de gedeelde thema's en spanningsvelden tussen hun denkkaders. Baseer je in beide gevallen uitsluitend op publiekelijk beschikbare informatie. Gebruik dezelfde toon: deskundig, toegankelijk en kritisch.</div>
+  </section>
+
+  <footer>v1.1 · mei 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = getComputedStyle(promptText).display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+  });
+</script>
+</body>
+</html>
