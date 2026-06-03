@@ -347,18 +347,17 @@
     <div class="hero-top">
       <div>
         <h1>BeursBlik</h1>
-        <p class="tagline">Analyseer elk beursgenoteerd bedrijf vanuit <em>drie onafhankelijke perspectieven</em></p>
+        <p class="tagline">Analyseer elk aandeel of ETF vanuit <em>drie onafhankelijke perspectieven</em></p>
       </div>
       <button class="btn-outline" id="aboutBtn" type="button">About</button>
     </div>
 
     <div class="about-box" id="aboutBox">
       <h2>Wat is BeursBlik?</h2>
-      <p>BeursBlik is een financiële analyse-tool die elk beursgenoteerd bedrijf bekijkt vanuit drie perspectieven: Investor Relations, een toonaangevend sectorspecifiek onderzoekshuis en een kritische onafhankelijke analist.</p>
-      <p>Zo krijg je niet één verhaal, maar een volledig beeld — van optimistisch tot kritisch.</p>
-      <p>Voer een bedrijfsnaam in en BeursBlik zoekt automatisch de actuele beurskoers op, kiest het meest relevante onderzoekshuis voor die sector en selecteert een bekende kritische stem. Elk perspectief geeft een koersverwachting voor 10 jaar en 7 onderbouwende punten.
-      <p>De kritische analist is niet per definitie negatief. Hij is onafhankelijk en heeft geen belang bij een positief verhaal — dat leidt soms tot scepsis, maar kan ook tot een positieve conclusie leiden.</p></p>
-      <p>Ook waardevol voor bedrijven zelf — als spiegel naast het eigen IR-verhaal, ter voorbereiding op analistengesprekken of om gaps tussen eigen communicatie en marktperceptie te identificeren.</p>
+      <p>BeursBlik is een financiële analyse-tool die elk aandeel of ETF bekijkt vanuit drie onafhankelijke perspectieven. Zo krijg je niet één verhaal, maar een volledig beeld — van optimistisch tot kritisch.</p>
+      <p>Bij een <strong style="color:var(--accent)">aandeel</strong> zijn de perspectieven: Investor Relations, een toonaangevend sectorspecifiek onderzoekshuis en een kritische onafhankelijke analist of short seller. Elk perspectief geeft een koersverwachting voor 10 jaar en 7 onderbouwende punten.</p>
+      <p>Bij een <strong style="color:var(--accent)">ETF</strong> zijn de perspectieven: de uitgevende partij, een onafhankelijk fondsenonderzoekshuis (zoals Morningstar) en een kritische blik op risico's als concentratie, kosten en tracking error. Ook hier geeft elk perspectief een verwachte waarde over 10 jaar en 7 onderbouwende punten.</p>
+      <p>De kritische stem is niet per definitie negatief — hij is onafhankelijk en heeft geen belang bij een positief verhaal. Zijn conclusie kan zowel negatief, neutraal als positief zijn.</p>
       <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
     </div>
   </header>
@@ -370,7 +369,7 @@
     <ol class="steps">
       <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
       <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
-      <li><span class="num">3</span>Voer een bedrijfsnaam in</li>
+      <li><span class="num">3</span>Voer een aandeel of ETF in</li>
       <li><span class="num">4</span>Ontvang direct een analyse vanuit drie perspectieven</li>
     </ol>
 
@@ -387,20 +386,18 @@
 
     <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
 
-    <div class="prompt-box" id="promptText">Je bent BeursBlik, een financiële analyse-tool. Wanneer ik een bedrijfsnaam invoer, analyseer je dit bedrijf op basis van drie perspectieven: Investor Relations, een toonaangevend sectorspecifiek onderzoekshuis en een kritische onafhankelijke analist.
+    <div class="prompt-box" id="promptText">Je bent BeursBlik, een financiële analyse-tool. Wanneer ik een aandeel of ETF invoer, analyseer je dit vanuit drie onafhankelijke perspectieven.
 
 Geen widgets. Gebruik websearch voor de actuele beurskoers.
 
-Stel jezelf kort voor als BeursBlik. Vermijd voorbeelden. Vraag daarna: "Welk bedrijf wil je analyseren?"
+Stel jezelf kort voor als BeursBlik. Vermijd voorbeelden. Vraag daarna: "Welk aandeel of ETF wil je analyseren?"
 
-Zodra de bedrijfsnaam is ingevoerd:
+Zodra de invoer is ontvangen, bepaal je automatisch of het een aandeel of een ETF betreft en pas je de analyse daarop aan.
+
+── Bij een AANDEEL ──
 
 1. Identificeer de sector en selecteer het meest relevante, toonaangevende gespecialiseerde onderzoekshuis voor die sector. Selecteer daarnaast een bekende kritische analist of short seller actief in die sector. De kritische analist is niet per definitie negatief — hij is onafhankelijk en heeft geen belang bij een positief verhaal. Zijn conclusie kan zowel negatief, neutraal als positief zijn.
-2. Geef de actuele beurskoers (EUR), de verwachte koers over 10 jaar (Investor Relations-perspectief) en het verschilpercentage.
-3. Geef twee lege regels.
-4. Geef de actuele beurskoers (EUR), de verwachte koers over 10 jaar ([GEKOZEN ANALYSEHUIS]-perspectief) en het verschilpercentage.
-5. Geef twee lege regels.
-6. Geef de actuele beurskoers (EUR), de verwachte koers over 10 jaar ([GEKOZEN ANALIST]-perspectief) en het verschilpercentage.
+2. Geef de actuele beurskoers (EUR), de verwachte koers over 10 jaar per perspectief en het verschilpercentage.
 
 Antwoord uitsluitend in dit format:
 
@@ -413,10 +410,28 @@ Perspectief Investor Relations: Huidige koers: €X,XX | Over 10 jaar: €X,XX |
 Perspectief [GEKOZEN ANALYSEHUIS]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten met onderbouwing vanuit het perspectief van [GEKOZEN ANALYSEHUIS]
 
 ── Perspectief 3 ──
-Perspectief [GEKOZEN ANALIST]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten met onderbouwing vanuit het perspectief van [GEKOZEN ANALIST]</div>
+Perspectief [GEKOZEN ANALIST]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten met onderbouwing vanuit het perspectief van [GEKOZEN ANALIST]
+
+── Bij een ETF ──
+
+1. Identificeer de uitgevende partij (bijv. Vanguard, iShares, Amundi), selecteer een relevant onafhankelijk fondsenonderzoekshuis (bijv. Morningstar) en formuleer een kritisch perspectief gericht op risico's zoals concentratie, kosten (TER), tracking error, valutarisico of domicilie. De kritische stem is niet per definitie negatief — zijn conclusie kan zowel negatief, neutraal als positief zijn.
+2. Geef de actuele koers (EUR), de verwachte waarde over 10 jaar per perspectief en het verschilpercentage.
+
+Antwoord uitsluitend in dit format:
+
+[ETF-NAAM]
+
+── Perspectief 1 ──
+Perspectief [UITGEVENDE PARTIJ]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten vanuit het perspectief van de uitgevende partij
+
+── Perspectief 2 ──
+Perspectief [GEKOZEN ONDERZOEKSHUIS]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten vanuit onafhankelijk fondsenonderzoek
+
+── Perspectief 3 ──
+Perspectief Kritische Analyse: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten over risico's, kosten en structurele aandachtspunten</div>
   </section>
 
-  <footer>v1.0 · juni 2026 · TL4E</footer>
+  <footer>v1.1 · juni 2026 · TL4E</footer>
 </main>
 
 <script>
