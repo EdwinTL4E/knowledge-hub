@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BeursBlik</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23081a10'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='serif' font-weight='bold' fill='%236ddba8'>BB</text></svg>"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Outfit:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0f2a1a;
+    --text: #f0faf5;
+    --muted: #8abfa0;
+    --accent: #52e0a8;
+    --silver: #d4f5e4;
+    --green: #2e8f5e;
+    --green-deep: #1e6040;
+    --gold: #d4aa4c;
+    --gold-soft: rgba(212,170,76,0.15);
+    --border: rgba(82,224,168,0.3);
+    --border-soft: rgba(82,224,168,0.12);
+    --shadow: 0 32px 80px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Outfit', sans-serif;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(46,143,94,0.28) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, rgba(30,96,64,0.25) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(82,224,168,0.06) 0%, transparent 60%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 44px 48px;
+    border: 1px solid var(--border);
+    border-radius: 2px 28px 28px 28px;
+    background: linear-gradient(145deg, rgba(8,22,14,0.97), rgba(6,16,10,0.97));
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(78,203,141,0.08);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--accent), var(--gold), transparent);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(78,203,141,0.08), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    color: var(--text);
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 38px;
+    border: 1px solid var(--border-soft);
+    border-radius: 22px;
+    background: rgba(6,14,9,0.78);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 1.2rem;
+    letter-spacing: 0.02em;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--silver);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(184,232,208,0.3);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #e4f5ee; border-bottom-color: var(--accent); }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.96rem;
+    color: #a8d4bc;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--accent);
+    font-size: 1.2rem;
+    min-width: 22px;
+    font-style: italic;
+  }
+
+  .perspectieven {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .perspectief-card {
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: rgba(10,22,14,0.6);
+  }
+
+  .perspectief-card .label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .perspectief-card .naam {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .perspectief-card .omschrijving {
+    font-size: 0.82rem;
+    color: #7aaa90;
+    line-height: 1.5;
+  }
+
+  .perspectief-card.bulls { border-color: rgba(78,203,141,0.2); }
+  .perspectief-card.neutral { border-color: rgba(201,168,76,0.2); }
+  .perspectief-card.bears { border-color: rgba(220,100,80,0.2); }
+  .perspectief-card.bears .naam { color: #e87d6a; }
+  .perspectief-card.neutral .naam { color: var(--gold); }
+
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green), var(--green-deep));
+    color: var(--silver);
+    border: 1px solid rgba(78,203,141,0.25);
+    padding: 13px 26px;
+    min-width: 170px;
+    box-shadow: 0 4px 20px rgba(26,92,58,0.4);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(26,92,58,0.6);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success {
+    background: linear-gradient(135deg, #1a4d30, #0e2e1c);
+    color: #90d4b0;
+    border-color: rgba(144,212,176,0.25);
+    box-shadow: 0 4px 20px rgba(26,77,48,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    font-size: 0.82rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.83rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(106,138,120,0.35);
+    padding-bottom: 2px;
+    margin-bottom: 16px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--accent); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(26,92,58,0.35);
+    background: rgba(2,8,4,0.92);
+    color: #a8d4bc;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    display: none;
+    box-shadow: inset 0 2px 12px rgba(0,0,0,0.4);
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(26,92,58,0.28);
+    background: rgba(2,8,4,0.88);
+    color: #a8d4bc;
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1rem; margin-bottom: 14px; color: var(--accent); letter-spacing: 0.03em; }
+
+  .deco-glyph {
+    position: absolute;
+    right: 48px;
+    top: 32px;
+    transform: none;
+    opacity: 0.05;
+    pointer-events: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    font-style: italic;
+    color: var(--silver);
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.1em;
+  }
+
+  .note {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: #4a6a58;
+    line-height: 1.6;
+  }
+
+  footer {
+    margin-top: 36px;
+    text-align: center;
+    color: #2a4a36;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 24px 20px; }
+    .btn-primary { width: 100%; text-align: center; }
+    .deco-glyph { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+    .perspectieven { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="deco-glyph">BB</div>
+    <div class="hero-top">
+      <div>
+        <h1>BeursBlik</h1>
+        <p class="tagline">Analyseer elk beursgenoteerd bedrijf vanuit <em>drie onafhankelijke perspectieven</em></p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">About</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is BeursBlik?</h2>
+      <p>BeursBlik is een financiële analyse-tool die elk beursgenoteerd bedrijf bekijkt vanuit drie perspectieven: Investor Relations, een toonaangevend sectorspecifiek onderzoekshuis en een kritische onafhankelijke analist.</p>
+      <p>Zo krijg je niet één verhaal, maar een volledig beeld — van optimistisch tot kritisch.</p>
+      <p>Voer een bedrijfsnaam in en BeursBlik zoekt automatisch de actuele beurskoers op, kiest het meest relevante onderzoekshuis voor die sector en selecteert een bekende kritische stem. Elk perspectief geeft een koersverwachting voor 10 jaar en 7 onderbouwende punten.
+      <p>De kritische analist is niet per definitie negatief. Hij is onafhankelijk en heeft geen belang bij een positief verhaal — dat leidt soms tot scepsis, maar kan ook tot een positieve conclusie leiden.</p></p>
+      <p>Ook waardevol voor bedrijven zelf — als spiegel naast het eigen IR-verhaal, ter voorbereiding op analistengesprekken of om gaps tussen eigen communicatie en marktperceptie te identificeren.</p>
+      <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Hoe werkt het</h2>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool. BeursBlik begeleidt je daarna stap voor stap.</p>
+
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Voer een bedrijfsnaam in</li>
+      <li><span class="num">4</span>Ontvang direct een analyse vanuit drie perspectieven</li>
+    </ol>
+
+    <p class="note">BeursBlik gebruikt websearch voor actuele beurskoersen. Koersverwachtingen zijn schattingen op basis van publieke informatie en modellen — geen beleggingsadvies.</p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+    <div class="prompt-box" id="promptText">Je bent BeursBlik, een financiële analyse-tool. Wanneer ik een bedrijfsnaam invoer, analyseer je dit bedrijf op basis van drie perspectieven: Investor Relations, een toonaangevend sectorspecifiek onderzoekshuis en een kritische onafhankelijke analist.
+
+Geen widgets. Gebruik websearch voor de actuele beurskoers.
+
+Stel jezelf kort voor als BeursBlik. Vermijd voorbeelden. Vraag daarna: "Welk bedrijf wil je analyseren?"
+
+Zodra de bedrijfsnaam is ingevoerd:
+
+1. Identificeer de sector en selecteer het meest relevante, toonaangevende gespecialiseerde onderzoekshuis voor die sector. Selecteer daarnaast een bekende kritische analist of short seller actief in die sector. De kritische analist is niet per definitie negatief — hij is onafhankelijk en heeft geen belang bij een positief verhaal. Zijn conclusie kan zowel negatief, neutraal als positief zijn.
+2. Geef de actuele beurskoers (EUR), de verwachte koers over 10 jaar (Investor Relations-perspectief) en het verschilpercentage.
+3. Geef twee lege regels.
+4. Geef de actuele beurskoers (EUR), de verwachte koers over 10 jaar ([GEKOZEN ANALYSEHUIS]-perspectief) en het verschilpercentage.
+5. Geef twee lege regels.
+6. Geef de actuele beurskoers (EUR), de verwachte koers over 10 jaar ([GEKOZEN ANALIST]-perspectief) en het verschilpercentage.
+
+Antwoord uitsluitend in dit format:
+
+[BEDRIJFSNAAM]
+
+── Perspectief 1 ──
+Perspectief Investor Relations: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten met onderbouwing vanuit Investor Relations-perspectief
+
+── Perspectief 2 ──
+Perspectief [GEKOZEN ANALYSEHUIS]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten met onderbouwing vanuit het perspectief van [GEKOZEN ANALYSEHUIS]
+
+── Perspectief 3 ──
+Perspectief [GEKOZEN ANALIST]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | Verschil: +X% | €10.000 groeit naar €X.XXX. Vervolgens 7 genummerde korte punten met onderbouwing vanuit het perspectief van [GEKOZEN ANALIST]</div>
+  </section>
+
+  <footer>v1.0 · juni 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = getComputedStyle(promptText).display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+  });
+</script>
+</body>
+</html>
