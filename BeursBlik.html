@@ -347,7 +347,7 @@
     <div class="hero-top">
       <div>
         <h1>BeursBlik</h1>
-        <p class="tagline">Analyseer elk aandeel of ETF vanuit <em>drie onafhankelijke perspectieven</em></p>
+        <p class="tagline">De analist die <em>niemand betaalt.</em></p>
       </div>
       <button class="btn-outline" id="aboutBtn" type="button">About</button>
     </div>
@@ -356,7 +356,8 @@
       <h2>Wat is BeursBlik?</h2>
       <p>BeursBlik is een financiële analyse-tool die elk aandeel of ETF bekijkt vanuit drie onafhankelijke perspectieven. Zo krijg je niet één verhaal, maar een volledig beeld — van optimistisch tot kritisch.</p>
       <p>Bij een <strong style="color:var(--accent)">aandeel</strong> zijn de perspectieven: Investor Relations, een toonaangevend sectorspecifiek onderzoekshuis en een kritische onafhankelijke analist of short seller. Bij een <strong style="color:var(--accent)">ETF</strong>: de uitgevende partij, een onafhankelijk fondsenonderzoekshuis (zoals Morningstar) en een kritische blik op risico's als concentratie, kosten en tracking error.</p>
-      <p>Elke analyse start met een beknopte omschrijving in twee zinnen en een macrocontext met rentegevoeligheid, valutarisico en conjunctuurfase. Bij een aandeel wordt ook het management beoordeeld op track record, kapitaalallocatie en bestuurderbelang. Elk perspectief geeft vervolgens een koersverwachting voor 10 jaar, CAGR, risicobeoordeling en 7 onderbouwende punten. Daarnaast een gemiddelde CAGR over alle perspectieven, een beleggersreflectie van Warren Buffett (waardebelegger), Ray Dalio (macro-belegger) en Peter Lynch (groeibelegger), aangevuld met een overheidsperspectief over regelgeving en beleidsrisico's.</p>
+      <p>Elke analyse start met een beknopte omschrijving, een moat-beoordeling (bij aandelen) en een macrocontext met rentegevoeligheid, valutarisico en conjunctuurfase. Bij een aandeel volgt een concurrentieanalyse met marktaandeel en grootste bedreiging — bij een ETF een vergelijking met het beste alternatief inclusief TER-verschil. Daarna een managementbeoordeling op track record, kapitaalallocatie en bestuurderbelang. Elk perspectief geeft een koersverwachting voor 10 jaar, CAGR, risicobeoordeling en 7 onderbouwende punten.</p>
+      <p>Na de drie perspectieven volgt een gemiddelde CAGR met bandbreedte (analistenzekerheid), intrinsieke waarde versus huidige koers en een instapmoment-oordeel. Vervolgens een risicosamenvatting met de top 5 risico's breed samengesteld uit financiële, macro, ESG en regulatory dimensies, en een katalysatorenlijst met de top 5 triggers die de koers de komende 1-2 jaar kunnen bewegen. Tot slot een beleggersreflectie van Warren Buffett, Ray Dalio en Peter Lynch, aangevuld met een overheidsperspectief over regelgeving en beleidsrisico's.</p>
       <p>BeursBlik is geen vervanging van officiële documenten zoals jaarverslagen of prospectussen. Die kijken terug — wat is er gebeurd. BeursBlik kijkt vooruit — wat kan er gebeuren, en vanuit welke perspectieven. De combinatie van beide geeft het meest complete beeld.</p>
       <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
     </div>
@@ -373,7 +374,7 @@
       <li><span class="num">4</span>Ontvang direct een volledige, gebalanceerde analyse</li>
     </ol>
 
-    <p class="note">BeursBlik gebruikt websearch voor actuele beurskoersen. Koersverwachtingen zijn schattingen op basis van publieke informatie en modellen — geen beleggingsadvies.</p>
+    <p class="note">BeursBlik gebruikt websearch voor actuele beurskoersen. Koersverwachtingen zijn schattingen op basis van publieke informatie en modellen — geen beleggingsadvies. Voor de meeste particuliere beleggers leveren brede indexfondsen op lange termijn meer rendement dan individuele aandelen. BeursBlik is een analyse-tool — geen aanbeveling om van indexbeleggen af te stappen.</p>
   </section>
 
   <section class="section" aria-labelledby="prompt-titel">
@@ -426,9 +427,15 @@ Sector: [SECTOR]
 
 ── In het kort ──
 [Twee zinnen: wat doet dit bedrijf, en waarom zou het de komende 10 jaar groeien?]
+Moat: [Breed / Smal / Geen] — [Één zin: waarop is het concurrentievoordeel gebaseerd?]
 
 ── Macrocontext ──
 Rentegevoeligheid: [Laag / Gemiddeld / Hoog] | Valutarisico: [Laag / Gemiddeld / Hoog] | Conjunctuurfase: [Vroegcyclisch / Midcyclisch / Laat-cyclisch / Defensief]
+
+── Concurrentie ──
+Belangrijkste concurrent: [NAAM] — [Sterker / Gelijkwaardig / Zwakker]
+Marktaandeel: [Groeiend / Stabiel / Krimpend]
+Grootste bedreiging: [Één zin]
 
 ── Management ──
 CEO: [naam] | Aangetreden: [jaar] | Track record: [kort oordeel in één zin]
@@ -452,6 +459,25 @@ Vervolgens 7 genummerde korte punten met onderbouwing vanuit het perspectief van
 
 ── Gemiddelde CAGR ──
 Gemiddelde CAGR over drie perspectieven: X,X% (rekenkundig gemiddelde van de drie CAGR's)
+Bandbreedte: de drie CAGR's lopen X,X% uiteen — [Hoge / Gemiddelde / Lage] analistenzekerheid.
+Intrinsieke waarde: [schatting op basis van cashflow/earnings] vs. huidige koers — [Onderwaard / Redelijk / Overwaard]
+Instapmoment: [Aantrekkelijk / Neutraal / Ongunstig] — [Één zin onderbouwing op basis van waardering en conjunctuurfase]
+
+── Risicosamenvatting ──
+Top 5 risico's gesorteerd van hoog naar laag, breed samengesteld uit financiële, macro, ESG en regulatory dimensies:
+1. [RISICO] — [Hoog] — [Één zin toelichting]
+2. [RISICO] — [Gemiddeld] — [Één zin toelichting]
+3. [RISICO] — [Gemiddeld] — [Één zin toelichting]
+4. [RISICO] — [Laag] — [Één zin toelichting]
+5. [RISICO] — [Laag] — [Één zin toelichting]
+
+── Katalysatoren ──
+Top 5 concrete triggers die de koers de komende 1-2 jaar kunnen bewegen:
+1. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+2. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+3. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+4. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+5. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
 
 ── Beleggersreflectie ──
 1. Warren Buffett (waardebelegger): [reflectie van 2-3 zinnen vanuit zijn filosofie: intrinsieke waarde, concurrentievoordeel, lange termijn]
@@ -482,6 +508,10 @@ Profiel: [PROFIEL]
 ── Macrocontext ──
 Rentegevoeligheid: [Laag / Gemiddeld / Hoog] | Valutarisico: [Laag / Gemiddeld / Hoog] | Conjunctuurfase: [Vroegcyclisch / Midcyclisch / Laat-cyclisch / Defensief]
 
+── Alternatieven ──
+Beste alternatief: [NAAM] — [Goedkoper / Vergelijkbaar / Duurder] | TER-verschil: [X,XX%]
+Onderscheid: [Één zin: waarom deze ETF wel of niet te verkiezen boven het alternatief]
+
 ── Perspectief 1 ──
 Perspectief [UITGEVENDE PARTIJ]: Huidige koers: €X,XX | Over 10 jaar: €X,XX | CAGR: X,X% | Verschil: +X% | €10.000 groeit naar €X.XXX.
 Risico: Laag / Gemiddeld / Hoog
@@ -499,6 +529,25 @@ Vervolgens 7 genummerde korte punten over risico's, kosten en structurele aandac
 
 ── Gemiddelde CAGR ──
 Gemiddelde CAGR over drie perspectieven: X,X% (rekenkundig gemiddelde van de drie CAGR's)
+Bandbreedte: de drie CAGR's lopen X,X% uiteen — [Hoge / Gemiddelde / Lage] analistenzekerheid.
+Intrinsieke waarde: [schatting op basis van onderliggende holdings en TER] vs. huidige koers — [Onderwaard / Redelijk / Overwaard]
+Instapmoment: [Aantrekkelijk / Neutraal / Ongunstig] — [Één zin onderbouwing op basis van waardering en conjunctuurfase]
+
+── Risicosamenvatting ──
+Top 5 risico's gesorteerd van hoog naar laag, breed samengesteld uit financiële, macro, ESG en regulatory dimensies:
+1. [RISICO] — [Hoog] — [Één zin toelichting]
+2. [RISICO] — [Gemiddeld] — [Één zin toelichting]
+3. [RISICO] — [Gemiddeld] — [Één zin toelichting]
+4. [RISICO] — [Laag] — [Één zin toelichting]
+5. [RISICO] — [Laag] — [Één zin toelichting]
+
+── Katalysatoren ──
+Top 5 concrete triggers die de koers de komende 1-2 jaar kunnen bewegen:
+1. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+2. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+3. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+4. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
+5. [KATALYSATOR] — [Positief / Negatief] — [Één zin toelichting]
 
 ── Beleggersreflectie ──
 1. Warren Buffett (waardebelegger): [reflectie van 2-3 zinnen vanuit zijn filosofie: intrinsieke waarde, concurrentievoordeel, lange termijn]
@@ -511,7 +560,7 @@ Gemiddelde CAGR over drie perspectieven: X,X% (rekenkundig gemiddelde van de dri
 Regelgeving & beleid: [reflectie van 2-3 zinnen over relevante wet- en regelgeving, toezicht en beleidsrisico's voor dit bedrijf of deze sector op 10 jaar horizon]
 
 ── Disclaimer ──
-Deze analyse is uitsluitend informatief en op basis van publieke gegevens en AI-modellen. Het is geen beleggingsadvies. Raadpleeg een financieel adviseur voor persoonlijke beslissingen.
+Deze analyse is uitsluitend informatief en op basis van publieke gegevens en AI-modellen. Het is geen beleggingsadvies. Raadpleeg een financieel adviseur voor persoonlijke beslissingen. Voor de meeste particuliere beleggers leveren brede indexfondsen op lange termijn meer rendement dan individuele aandelen. BeursBlik is een analyse-tool — geen aanbeveling om van indexbeleggen af te stappen.
 
 ── Wat wil je nu doen? ──
 1. Nieuw aandeel of ETF analyseren
@@ -523,7 +572,7 @@ Deze analyse is uitsluitend informatief en op basis van publieke gegevens en AI-
 Typ een cijfer of stel een eigen vraag.</div>
   </section>
 
-  <footer>v4.0 · juni 2026 · TL4E</footer>
+  <footer>v4.9 · juni 2026 · TL4E</footer>
 </main>
 
 <script>
