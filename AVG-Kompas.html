@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AVG-Kompas</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230d1a2e'/><text y='72' x='50' text-anchor='middle' font-size='52' font-family='serif' font-weight='bold' fill='%236db8db'>AK</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d1a2e;
+    --text: #eef5fc;
+    --muted: #7da8c8;
+    --accent: #4db8e8;
+    --silver: #cce8f5;
+    --blue: #2a6fa8;
+    --blue-deep: #1a4a72;
+    --gold: #c8a84a;
+    --gold-soft: rgba(200,168,74,0.13);
+    --border: rgba(77,184,232,0.28);
+    --border-soft: rgba(77,184,232,0.11);
+    --shadow: 0 32px 80px rgba(0,0,0,0.45);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(42,111,168,0.26) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, rgba(26,74,114,0.22) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(77,184,232,0.05) 0%, transparent 60%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 44px 48px;
+    border: 1px solid var(--border);
+    border-radius: 2px 28px 28px 28px;
+    background: linear-gradient(145deg, rgba(8,14,22,0.97), rgba(5,10,16,0.97));
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(77,184,232,0.08);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--accent), var(--gold), transparent);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(77,184,232,0.07), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    color: #c8a84a;
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 38px;
+    border: 1px solid var(--border-soft);
+    border-radius: 22px;
+    background: rgba(5,10,18,0.78);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 1.12rem;
+    letter-spacing: 0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--silver);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(184,220,240,0.3);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #e4f2fa; border-bottom-color: var(--accent); }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.96rem;
+    color: #88b8d4;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+    font-size: 1.2rem;
+    min-width: 22px;
+    font-style: italic;
+  }
+
+  .bronnen {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .bron-card {
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: rgba(8,14,24,0.6);
+  }
+
+  .bron-card .bron-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .bron-card .bron-naam {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+
+  .bron-card .bron-url {
+    font-size: 0.78rem;
+    color: #5a8aaa;
+    line-height: 1.4;
+  }
+
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    color: var(--silver);
+    border: 1px solid rgba(77,184,232,0.22);
+    padding: 13px 26px;
+    min-width: 170px;
+    box-shadow: 0 4px 20px rgba(26,74,114,0.4);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(26,74,114,0.6);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success {
+    background: linear-gradient(135deg, #1a3d58, #0e2230);
+    color: #7ab8d8;
+    border-color: rgba(122,184,216,0.22);
+    box-shadow: 0 4px 20px rgba(26,61,88,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    font-size: 0.82rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.83rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(90,138,170,0.35);
+    padding-bottom: 2px;
+    margin-bottom: 16px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--accent); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(26,74,114,0.35);
+    background: rgba(2,6,12,0.92);
+    color: #88b8d4;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    display: none;
+    box-shadow: inset 0 2px 12px rgba(0,0,0,0.4);
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(26,74,114,0.28);
+    background: rgba(2,6,12,0.88);
+    color: #88b8d4;
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1rem; margin-bottom: 14px; color: var(--accent); letter-spacing: 0.03em; }
+
+  .deco-glyph {
+    position: absolute;
+    right: 48px;
+    top: 32px;
+    opacity: 0.08;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    font-style: italic;
+    color: #c8a84a;
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.1em;
+  }
+
+  .note {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: #3a5a72;
+    line-height: 1.6;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .badge-blue { background: rgba(77,184,232,0.12); color: var(--accent); border: 1px solid rgba(77,184,232,0.22); }
+  .badge-gold { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(200,168,74,0.22); }
+
+  footer {
+    margin-top: 36px;
+    text-align: center;
+    color: #1e3a52;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 24px 20px; }
+    .btn-primary { width: 100%; text-align: center; }
+    .deco-glyph { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+    .bronnen { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="deco-glyph">AK</div>
+    <div class="hero-top">
+      <div>
+        <h1>AVG-Kompas</h1>
+        <p class="tagline">De AVG uitgelegd vanuit <em>officiële bronnen.</em></p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">About</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is AVG-Kompas?</h2>
+      <p>Privacywetgeving hoeft niet ingewikkeld te zijn. AVG-Kompas legt de AVG / GDPR uit vanuit vier officiële bronnen — helder, beknopt en altijd met bronvermelding.</p>
+      <p>De tool put uit vier gezaghebbende bronnen: de <strong style="color:var(--accent)"><a href="https://www.edpb.europa.eu/edpb_en" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid rgba(77,184,232,0.3)">EDPB</a></strong> (European Data Protection Board), de <strong style="color:var(--accent)"><a href="https://autoriteitpersoonsgegevens.nl/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid rgba(77,184,232,0.3)">Autoriteit Persoonsgegevens</a></strong>, de <strong style="color:var(--accent)"><a href="https://www.rijksoverheid.nl/themas/overheid-en-democratie/privacy-en-persoonsgegevens" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid rgba(77,184,232,0.3)">Rijksoverheid</a></strong> en het <strong style="color:var(--accent)"><a href="https://ondernemersplein.overheid.nl/bedrijfsvoering/juridische-zaken/de-avg-dit-moeten-ondernemers-doen/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid rgba(77,184,232,0.3)">Ondernemersplein</a></strong>. Bij elk antwoord wordt aangegeven welke bron(nen) zijn gebruikt en hoe betrouwbaar het antwoord is.</p>
+      <p>Valt je vraag buiten de AVG? Dan geeft AVG-Kompas een speculatie op basis van de meest verwante bron — of wijst je op boeken, films of andere media met een AVG-thema.</p>
+      <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Hoe werkt het</h2>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool. AVG-Kompas stelt zich voor en wacht op jouw vraag.</p>
+
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Stel je AVG-vraag over privacy en gegevensbescherming</li>
+      <li><span class="num">4</span>Ontvang een antwoord met bronvermelding en betrouwbaarheidsscore</li>
+    </ol>
+
+    <p class="note">AVG-Kompas is informatief, geen juridisch advies. Voor complexe of organisatie-specifieke situaties blijft een DPO of juridisch adviseur onmisbaar. Bij twijfel, raadpleeg de Autoriteit Persoonsgegevens.</p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+    <div class="prompt-box" id="promptText">Stel jezelf kort voor als AVG-Kompas, een synthese van van onderstaande websites en geef aan dat je wacht op instructies.
+
+1. https://www.edpb.europa.eu/edpb_en
+2. https://autoriteitpersoonsgegevens.nl/
+3. https://www.rijksoverheid.nl/themas/overheid-en-democratie/privacy-en-persoonsgegevens
+4. https://ondernemersplein.overheid.nl/bedrijfsvoering/juridische-zaken/de-avg-dit-moeten-ondernemers-doen/
+
+Regels: Geef bij je antwoorden een beknopte bronvermelding en mate van betrouwbaarheid van het antwoord. Bij buiten scope, doe een speculatie gerelateerd aan de websites. Denk ook aan boeken, films of andere media met een AVG-thema. Antwoord altijd in het Nederlands. Houd antwoorden beknopt: maximaal 150 woorden per antwoord.
+
+Antwoord altijd in dit format:
+
+Antwoord: [inhoudelijk antwoord]
+Bron: [naam bron]
+Betrouwbaarheid: [Hoog / Gemiddeld / Laag] — [één zin toelichting]</div>
+  </section>
+
+  <footer>v1.0 · juni 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = getComputedStyle(promptText).display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'About';
+  });
+</script>
+</body>
+</html>
