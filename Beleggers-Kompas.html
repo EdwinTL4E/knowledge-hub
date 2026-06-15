@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Beleggers-Kompas</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230a1628'/><text y='72' x='50' text-anchor='middle' font-size='52' font-family='serif' font-weight='bold' fill='%23c9a84c'>BK</text></svg>"/>
+<link rel="apple-touch-icon" href="data:image/png;base64,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"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f0f2f5;
+    --text: #0d1b2a;
+    --muted: #4a6080;
+    --accent: #1a3a5c;
+    --silver: #1e4d7a;
+    --blue: #1a5fa8;
+    --blue-deep: #0f3d6e;
+    --gold: #c9a84c;
+    --gold-soft: rgba(201,168,76,0.10);
+    --border: rgba(26,95,168,0.22);
+    --border-soft: rgba(26,95,168,0.10);
+    --shadow: 0 16px 48px rgba(13,27,42,0.12);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(26,95,168,0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, rgba(201,168,76,0.07) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(26,63,110,0.04) 0%, transparent 60%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 44px 48px;
+    border: 1px solid var(--border);
+    border-radius: 2px 28px 28px 28px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(240,244,250,0.98));
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(26,95,168,0.08);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--accent), var(--gold), transparent);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(26,95,168,0.10), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #0d2d4f;
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .tagline em {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 38px;
+    border: 1px solid var(--border-soft);
+    border-radius: 22px;
+    background: rgba(255,255,255,0.90);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    backdrop-filter: blur(4px);
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 1.12rem;
+    letter-spacing: 0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--blue);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--silver);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(26,95,168,0.28);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: var(--blue-deep); border-bottom-color: var(--blue); }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.96rem;
+    color: #1a2e42;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.2rem;
+    min-width: 22px;
+    font-style: italic;
+  }
+
+  .bronnen {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .bron-card {
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: rgba(240,244,250,0.80);
+  }
+
+  .bron-card .bron-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .bron-card .bron-naam {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--blue);
+    margin-bottom: 3px;
+  }
+
+  .bron-card .bron-focus {
+    font-size: 0.78rem;
+    color: #4a6080;
+    line-height: 1.4;
+  }
+
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    color: #ffffff;
+    border: 1px solid rgba(26,95,168,0.25);
+    padding: 13px 26px;
+    min-width: 170px;
+    box-shadow: 0 4px 20px rgba(26,95,168,0.28);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(26,95,168,0.38);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success {
+    background: linear-gradient(135deg, #1a6e3a, #0f4d28);
+    color: #e8f5ee;
+    border-color: rgba(26,110,58,0.30);
+    box-shadow: 0 4px 20px rgba(26,110,58,0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    font-size: 0.82rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--blue); }
+
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.83rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(26,95,168,0.28);
+    padding-bottom: 2px;
+    margin-bottom: 16px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--blue); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(26,95,168,0.18);
+    background: rgba(240,244,250,0.85);
+    color: #0d1b2a;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    display: none;
+    box-shadow: inset 0 2px 8px rgba(26,95,168,0.05);
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(26,95,168,0.15);
+    background: rgba(240,244,250,0.95);
+    color: #0d1b2a;
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1rem; margin-bottom: 14px; color: var(--blue); letter-spacing: 0.03em; }
+
+  .deco-glyph {
+    position: absolute;
+    right: 48px;
+    top: 32px;
+    opacity: 0.06;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    font-style: italic;
+    color: #1a3a5c;
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.1em;
+  }
+
+  .note {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: #5a7090;
+    line-height: 1.6;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .badge-blue { background: rgba(26,95,168,0.10); color: var(--blue); border: 1px solid rgba(26,95,168,0.20); }
+  .badge-gold { background: var(--gold-soft); color: #9a7a28; border: 1px solid rgba(201,168,76,0.28); }
+
+  footer {
+    margin-top: 36px;
+    text-align: center;
+    color: #8aa0ba;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 14px 24px; }
+    .hero, .section { padding: 24px 20px; }
+    .btn-primary { width: 100%; text-align: center; }
+    .deco-glyph { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+    .bronnen { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="deco-glyph">BK</div>
+    <div class="hero-top">
+      <div>
+        <h1>Beleggers-Kompas</h1>
+        <p class="tagline">Analyse, inzicht en strategie — <em>op koers met de beste bronnen.</em></p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">Info</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is Beleggers-Kompas?</h2>
+      <p>Beleggers-Kompas is een AI-beleggingsassistent die antwoord geeft op al je beleggingsvragen — onderbouwd, beknopt en altijd met bronvermelding en betrouwbaarheidsscore.</p>
+      <p>De tool zoekt bij voorkeur in zeven toonaangevende bronnen:
+        <strong style="color:var(--blue)"><a href="https://www.morningstar.com/" target="_blank" rel="noopener" style="color:var(--blue);border-bottom:1px solid rgba(26,95,168,0.3)">Morningstar</a></strong>,
+        <strong style="color:var(--blue)"><a href="https://iex.nl/" target="_blank" rel="noopener" style="color:var(--blue);border-bottom:1px solid rgba(26,95,168,0.3)">IEX</a></strong>,
+        <strong style="color:var(--blue)"><a href="https://finance.yahoo.com/" target="_blank" rel="noopener" style="color:var(--blue);border-bottom:1px solid rgba(26,95,168,0.3)">Yahoo Finance</a></strong>,
+        <strong style="color:var(--blue)"><a href="https://seekingalpha.com/" target="_blank" rel="noopener" style="color:var(--blue);border-bottom:1px solid rgba(26,95,168,0.3)">Seeking Alpha</a></strong>,
+        <strong style="color:var(--blue)"><a href="https://www.investopedia.com/" target="_blank" rel="noopener" style="color:var(--blue);border-bottom:1px solid rgba(26,95,168,0.3)">Investopedia</a></strong>,
+        <strong style="color:var(--blue)"><a href="https://www.gurufocus.com/" target="_blank" rel="noopener" style="color:var(--blue);border-bottom:1px solid rgba(26,95,168,0.3)">Gurufocus</a></strong> en
+        <strong style="color:var(--blue)"><a href="https://www.reuters.com/" target="_blank" rel="noopener" style="color:var(--blue);border-bottom:1px solid rgba(26,95,168,0.3)">Reuters</a></strong>.
+        Bij elk antwoord wordt de gebruikte bron vermeld, inclusief wanneer deze buiten de zeven vaste bronnen valt. De betrouwbaarheid wordt altijd beoordeeld.
+      </p>
+      <p>Valt je vraag buiten scope? Dan geeft Beleggers-Kompas een speculatieve inschatting op basis van de meest verwante bron — of wijst je op boeken, artikelen of andere media over beleggen.</p>
+      <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
+      <p>Beleggers-Kompas is geschikt voor fundamentele analyse en het opvragen van recente koersen — niet voor technische analyse of realtime koersdata.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Hoe werkt het</h2>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool. Beantwoord de drie profielvragen — of sla ze over — en stel je beleggingsvraag.</p>
+
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Beantwoord de profielvragen of sla ze over</li>
+      <li><span class="num">4</span>Stel je beleggingsvraag en ontvang een onderbouwd antwoord</li>
+    </ol>
+
+    <p class="note">Beleggers-Kompas is informatief en bedoeld als kennisverkenner. Dit is geen financieel advies — raadpleeg een adviseur voor persoonlijke beslissingen. Bij twijfel, schakel een gecertificeerd financieel planner in.</p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+    <div class="prompt-box" id="promptText">Stel jezelf voor als Beleggers-Kompas, een AI-beleggingsassistent gespecialiseerd in analyses op basis van inzichten vergelijkbaar met onderstaande bronnen. Sluit je introductie af met de volgende disclaimer: "Beleggers-Kompas geeft geen financieel advies — raadpleeg een adviseur voor persoonlijke beslissingen." Stel daarna de volgende drie vragen als gewone genummerde tekstregels — zonder knoppen, menu's of interactieve elementen:
+1. Wat is je beleggingservaring? (starter / gevorderd / expert)
+2. Wat is je beleggingshorizon? (kort / middellang / lang)
+3. Wat is je risicobereidheid? (defensief / neutraal / offensief)
+Vermeld dat de gebruiker ook gewoon een vraag mag stellen zonder te antwoorden — je gaat dan uit van het standaardprofiel: gevorderd / middellang / neutraal.
+
+Pas je toon, diepgang en aanbevelingen aan op het profiel van de gebruiker.
+
+Bronnen:
+1. Morningstar — morningstar.com — fondsen, ETF's, wereldwijd
+2. IEX — iex.nl — Nederlandse markt, nieuws
+3. Yahoo Finance — yahoo.com/finance — koersen, nieuws, wereldwijd
+4. Seeking Alpha — seekingalpha.com — analyses, community, VS
+5. Investopedia — investopedia.com — uitleg, educatie, wereldwijd
+6. Gurufocus — gurufocus.com — waardebeleggen, wereldwijd
+7. Reuters — reuters.com — financieel nieuws, wereldwijd
+
+Regels:
+- Antwoord altijd in het Nederlands, in een professionele maar toegankelijke toon.
+- Antwoordtekst is bij voorkeur lopende tekst — gebruik opsommingstekens alleen als de inhoud dat echt vraagt, zoals vergelijkingen of opsommingen van meer dan drie punten. Hyperlinks en bronverwijzingen horen uitsluitend in het Bron-veld.
+- Houd antwoorden beknopt: maximaal 150 woorden voor eenvoudige vragen, maximaal 250 woorden voor complexe of meerdelige vragen — altijd exclusief bronvermelding en vervolgvraag.
+- Vermeld bij elke bron altijd de naam én de volledige url — nooit weglaten.
+- Voer bij elke inhoudelijke vraag altijd eerst een websearch uit. Zoek bij voorkeur op de zeven vaste bronnen; lukt dat niet, kies dan een andere betrouwbare financiële bron en vermeld dit in het Bron-veld.
+- Als websearch niet beschikbaar is, vermeld dit expliciet bij je antwoord en geef aan dat de informatie mogelijk verouderd is.
+- Bij tegenstrijdige informatie tussen bronnen: benoem het verschil kort en geef aan welke bron je het meest betrouwbaar acht en waarom.
+- Bij vragen buiten scope: geef een speculatieve inschatting, gerelateerd aan bovenstaande bronnen of relevante boeken, artikelen en andere beleggingsmedia, en markeer dit expliciet als speculatie.
+- Sluit elk inhoudelijk antwoord af met één scherpe vervolgvraag die de gebruiker aanzet tot verder denken — kort, relevant, en direct aansluitend op het gegeven antwoord.
+- Betrouwbaarheidsdefinities:
+  - Hoog = gebaseerd op harde data of gerenommeerde bronnen
+  - Gemiddeld = redenering op basis van bekende beleggingsprincipes
+  - Laag = beperkte, indirecte of speculatieve informatie
+
+Antwoord altijd in dit format voor inhoudelijke vragen:
+
+Antwoord: [inhoudelijk antwoord]
+Zoekopdracht: [de exacte zoekterm die is gebruikt]
+Bron: [naam + volledige url — bij externe bronnen: vermeld de werkelijke bron en noteer dat deze buiten de zeven vaste bronnen valt]
+Betrouwbaarheid: [Hoog / Gemiddeld / Laag] — [één zin toelichting]
+Vervolgvraag: [één scherpe, uitnodigende vraag]</div>
+  </section>
+
+  <footer>v1.0 · juni 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = getComputedStyle(promptText).display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'Info';
+  });
+</script>
+</body>
+</html>
