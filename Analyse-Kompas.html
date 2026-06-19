@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Analyse-Kompas</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23141414'/><text y='72' x='50' text-anchor='middle' font-size='52' font-family='serif' font-weight='bold' fill='%23e8dfc0'>AK</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #141414;
+    --text: #eef0f2;
+    --muted: #8a9098;
+    --accent: #c8a84a;
+    --title: #e8dfc0;
+    --silver: #d8dde3;
+    --green: #3a3f46;
+    --green-deep: #252a30;
+    --gold: #c8a84a;
+    --gold-soft: rgba(200,168,74,0.13);
+    --border: rgba(200,168,74,0.28);
+    --border-soft: rgba(200,168,74,0.11);
+    --shadow: 0 32px 80px rgba(0,0,0,0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(200,168,74,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, rgba(58,63,70,0.3) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(200,168,74,0.03) 0%, transparent 60%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 44px 48px;
+    border: 1px solid var(--border);
+    border-radius: 2px 28px 28px 28px;
+    background: linear-gradient(145deg, rgba(8,16,10,0.97), rgba(5,10,7,0.97));
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(200,168,74,0.08);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--accent), var(--gold), transparent);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,168,74,0.07), transparent);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5.5vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    color: var(--title);
+  }
+
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .tagline em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-top: 20px;
+    padding: 32px 38px;
+    border: 1px solid var(--border-soft);
+    border-radius: 22px;
+    background: rgba(20,20,20,0.78);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 1.12rem;
+    letter-spacing: 0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--silver);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(184,230,200,0.3);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a:hover { color: #e4f8ea; border-bottom-color: var(--accent); }
+
+  .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.96rem;
+    color: #9aa0a8;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps .num {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+    font-size: 1.2rem;
+    min-width: 22px;
+    font-style: italic;
+  }
+
+  .btn-primary, .btn-outline {
+    display: inline-block;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transition: transform 0.14s, filter 0.14s, background 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green), var(--green-deep));
+    color: var(--silver);
+    border: 1px solid rgba(77,184,122,0.22);
+    padding: 13px 26px;
+    min-width: 170px;
+    box-shadow: 0 4px 20px rgba(26,74,48,0.4);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(26,74,48,0.6);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.success {
+    background: linear-gradient(135deg, #1a3d28, #0e2218);
+    color: #7ab8a0;
+    border-color: rgba(122,184,160,0.22);
+    box-shadow: 0 4px 20px rgba(26,61,40,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    font-size: 0.82rem;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+
+  .toggle-link {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.83rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(90,170,120,0.35);
+    padding-bottom: 2px;
+    margin-bottom: 16px;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .toggle-link:hover { color: var(--accent); }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-box {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(58,63,70,0.6);
+    background: rgba(10,10,10,0.92);
+    color: #9aa0a8;
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    display: none;
+    box-shadow: inset 0 2px 12px rgba(0,0,0,0.4);
+  }
+
+  .about-box {
+    display: none;
+    margin-top: 24px;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid rgba(58,63,70,0.5);
+    background: rgba(10,10,10,0.88);
+    color: #9aa0a8;
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+  .about-box h2 { font-size: 1rem; margin-bottom: 14px; color: var(--accent); letter-spacing: 0.03em; }
+
+  .deco-glyph {
+    position: absolute;
+    right: 48px;
+    top: 32px;
+    opacity: 0.07;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 6.5rem;
+    font-style: italic;
+    color: var(--title);
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.1em;
+  }
+
+  .note {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: #4a5058;
+    line-height: 1.6;
+  }
+
+  footer {
+    margin-top: 36px;
+    text-align: center;
+    color: #2a2f36;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 20px 12px 28px; }
+    .hero { padding: 24px 18px; }
+    .section { padding: 22px 18px; }
+    h1 { font-size: 2rem; }
+    .hero-top { flex-direction: row; align-items: center; }
+    .btn-outline { padding: 8px 14px; font-size: 0.78rem; flex-shrink: 0; }
+    .btn-primary { width: 100%; text-align: center; min-width: unset; padding: 14px 20px; }
+    .deco-glyph { display: none; }
+    .prompt-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .steps li { font-size: 0.9rem; gap: 12px; }
+    .about-box { padding: 18px 16px; font-size: 0.88rem; }
+    .prompt-box { padding: 18px 16px; font-size: 0.82rem; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="deco-glyph">AK</div>
+    <div class="hero-top">
+      <div>
+        <h1>Analyse-Kompas</h1>
+        <p class="tagline">Dieper graven. <em>Scherper denken.</em></p>
+      </div>
+      <button class="btn-outline" id="aboutBtn" type="button">Info</button>
+    </div>
+
+    <div class="about-box" id="aboutBox">
+      <h2>Wat is Analyse-Kompas?</h2>
+      <p>Complexe vraagstukken laten zich op meerdere manieren doorgronden. Analyse-Kompas biedt zes bewezen methodieken én een vrije keuze — van grondoorzaakanalyse tot macro-omgevingsverkenning — zodat je altijd de juiste aanpak kiest voor jouw situatie.</p>
+      <p>Kies de methodiek die past bij jouw doel: een probleem doorgronden, risico's in kaart brengen, aannames toetsen of een strategisch overzicht maken. Geef daarna je onderwerp via upload, URL of copy/paste — Analyse-Kompas neemt het over.</p>
+      <p>De zeven opties zijn:</p>
+      <p style="margin-bottom:4px;color:var(--accent);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;">Oorzaakanalyse</p>
+      <p style="margin-bottom:10px;font-size:0.88rem;"><strong style="color:var(--silver);">5x Waarom</strong> — doorvragen tot de grondoorzaak</p>
+      <p style="margin-bottom:4px;color:var(--accent);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;">Strategische positiebepaling</p>
+      <p style="margin-bottom:10px;font-size:0.88rem;"><strong style="color:var(--silver);">SWOT-analyse</strong> (Strengths, Weaknesses, Opportunities, Threats) — interne en externe factoren in beeld</p>
+      <p style="margin-bottom:4px;color:var(--accent);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;">Perspectiefverbreding</p>
+      <p style="margin-bottom:10px;font-size:0.88rem;"><strong style="color:var(--silver);">6 Denkhoeden</strong> — meerdere invalshoeken, geen tunnelvisie</p>
+      <p style="margin-bottom:4px;color:var(--accent);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;">Risicobeheer</p>
+      <p style="margin-bottom:10px;font-size:0.88rem;"><strong style="color:var(--silver);">FMEA</strong> (Failure Mode and Effects Analysis) — faalmodi en gevolgen in kaart brengen</p>
+      <p style="margin-bottom:4px;color:var(--accent);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;">Macro-omgeving</p>
+      <p style="margin-bottom:10px;font-size:0.88rem;"><strong style="color:var(--silver);">PESTLE</strong> (Political, Economic, Social, Technological, Legal, Environmental) — brede blik op macro-omgevingsfactoren</p>
+      <p style="margin-bottom:4px;color:var(--accent);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;">Fundamenteel denken</p>
+      <p style="margin-bottom:10px;font-size:0.88rem;"><strong style="color:var(--silver);">First Principles Thinking</strong> — terug naar de kern van het probleem</p>
+      <p style="margin-bottom:4px;color:var(--accent);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;">Vrije keuze</p>
+      <p style="margin-bottom:14px;font-size:0.88rem;"><strong style="color:var(--silver);">Vrije methodiek</strong> — geef zelf een analysemethode op; als de AI die niet kent, vraagt hij om toelichting of een andere keuze</p>
+      <p>Werkt met ChatGPT, Claude, Gemini en Copilot. Geen installatie nodig.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="uitleg-titel">
+    <h2 id="uitleg-titel">Hoe werkt het</h2>
+    <p>Kopieer de prompt en plak hem in je favoriete AI-tool. Analyse-Kompas stelt zich voor, toont de zeven methodieken en wacht op jouw keuze.</p>
+
+    <ol class="steps">
+      <li><span class="num">1</span>Klik op <strong>"Kopieer prompt"</strong></li>
+      <li><span class="num">2</span>Plak in <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>, <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a> of <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></li>
+      <li><span class="num">3</span>Kies een van de zeven methodieken (1–7)</li>
+      <li><span class="num">4</span>Geef je onderwerp via upload, URL of copy/paste</li>
+      <li><span class="num">5</span>Ontvang een gestructureerde analyse volgens de gekozen methodiek</li>
+    </ol>
+
+    <p class="note">Analyse-Kompas is informatief van aard. Eigen oordeelsvorming blijft onmisbaar.</p>
+  </section>
+
+  <section class="section" aria-labelledby="prompt-titel">
+    <div class="prompt-header">
+      <div>
+        <h2 id="prompt-titel">Prompt</h2>
+      </div>
+      <button class="btn-primary" id="copyBtn" type="button">Kopieer prompt</button>
+    </div>
+
+    <span class="toggle-link" id="toggleBtn" role="button" tabindex="0">▶ Toon prompt</span>
+
+    <div class="prompt-box" id="promptText">Neem de rol aan van Analyse-Kompas. Jouw taak is om mij te helpen bij het analyseren van complexe onderwerpen met behulp van gestructureerde methodieken. Voer alle antwoorden uit in het Nederlands. Geen icons, widgets, tabellen.
+
+Stel je kort voor en presenteer een genummerd keuzemenu met de volgende methodieken, inclusief een korte beschrijving van de focus:
+
+1. 5x Waarom — voor het vinden van de grondoorzaak van een probleem
+2. SWOT-analyse — voor het in kaart brengen van interne en externe factoren
+3. 6 Denkhoeden — voor het voorkomen van tunnelvisie en het verkennen van perspectieven
+4. FMEA — voor het analyseren van risico's en faalmodi in systemen
+5. PESTLE-analyse — voor een brede blik op macro-omgevingsfactoren
+6. First Principles Thinking — voor het afbreken van problemen tot de fundamentele waarheid
+7. Vrije methodiek — geef zelf een analysemethode op die ik vervolgens toepas
+
+Vraag mij vervolgens om een cijfer (1 t/m 7) te kiezen.
+
+Zodra ik mijn keuze heb gemaakt, vraag je mij om de te analyseren inhoud (via upload, url of copy/paste). Voer daarna de analyse uit volgens de gekozen methodiek, altijd in de volgende vaste structuur:
+
+- Methodiek: [naam, korte uitleg]
+- Onderwerp: [korte omschrijving van de input]
+- Analyse: [uitwerking per stap of categorie van de methodiek]
+- Conclusie: [kernbevindingen in maximaal 5 punten]
+
+Vraag na de analyse of ik een nieuwe methodiek wil kiezen of hetzelfde onderwerp anders wil benaderen.
+
+Als ik kies voor optie 7, vraag je mij welke methodiek ik wil toepassen. Als de opgegeven methodiek niet bestaat of onbekend is, meld je dit expliciet en vraag je of ik een toelichting wil geven of een andere keuze wil maken. Als de methodiek wel bekend is, pas je deze toe in dezelfde vaste structuur.
+
+Wacht nu op mijn keuze.</div>
+  </section>
+
+  <footer>v1.0 · juni 2026 · TL4E</footer>
+</main>
+
+<script>
+  const promptText = document.getElementById('promptText');
+  const toggleBtn  = document.getElementById('toggleBtn');
+  const rawPrompt  = promptText.textContent.trim();
+
+  function togglePrompt() {
+    const isHidden = getComputedStyle(promptText).display === 'none';
+    promptText.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ Verberg prompt' : '▶ Toon prompt';
+  }
+
+  toggleBtn.addEventListener('click', togglePrompt);
+  toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePrompt(); }
+  });
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(rawPrompt);
+      copyBtn.textContent = 'Gekopieerd ✓';
+      copyBtn.classList.add('success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Kopieer prompt';
+        copyBtn.classList.remove('success');
+      }, 2400);
+    } catch {
+      promptText.style.display = 'block';
+      toggleBtn.textContent = '▼ Verberg prompt';
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Kopieer handmatig';
+    }
+  });
+
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutBox = document.getElementById('aboutBox');
+  aboutBtn.addEventListener('click', () => {
+    const hidden = getComputedStyle(aboutBox).display === 'none';
+    aboutBox.style.display = hidden ? 'block' : 'none';
+    aboutBtn.textContent = hidden ? 'Sluiten' : 'Info';
+  });
+</script>
+</body>
+</html>
