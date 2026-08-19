@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lunchafspraak Den Haag</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root{
+    --ink:#14243A;
+    --paper:#FBFAF7;
+    --muted:#5D6B7E;
+    --line:#DCDCD4;
+    --accent:#0F6E76;
+    --shade:#EDEEE9;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font:400 16px/1.55 "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 28px 64px}
+
+  header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:26px}
+  h1{
+    font-family:Georgia,"Iowan Old Style","Times New Roman",serif;
+    font-weight:400;font-size:38px;line-height:1.12;letter-spacing:-.01em;margin:0 0 8px;
+  }
+  .lede{margin:0;color:var(--muted);max-width:56ch;font-size:15px}
+
+  .layout{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:start}
+  @media (max-width:860px){.layout{grid-template-columns:1fr}}
+
+  #map{
+    height:460px;border:1px solid var(--line);border-radius:2px;
+    background:var(--shade);
+  }
+  @media (max-width:860px){#map{height:340px}}
+
+  ol.stops{list-style:none;margin:0;padding:0}
+  ol.stops li{
+    display:grid;grid-template-columns:34px 1fr;gap:14px;
+    padding:16px 12px 18px;border-bottom:1px solid var(--line);
+    cursor:pointer;transition:background .15s ease;
+  }
+  ol.stops li:first-child{padding-top:4px}
+  ol.stops li:hover,ol.stops li:focus-visible{background:var(--shade);outline:none}
+  .num{
+    font-family:Georgia,serif;font-size:15px;color:var(--paper);
+    background:var(--ink);width:26px;height:26px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .time{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+  .place{font-family:Georgia,serif;font-size:19px;line-height:1.25;margin:0 0 4px}
+  .place a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent)}
+  .place a:hover{color:var(--accent)}
+  .addr{font-size:14px;margin:0 0 6px}
+  .note{font-size:13.5px;color:var(--muted);margin:0}
+  .note a{color:var(--accent)}
+
+  .tip{
+    margin-top:22px;padding:16px 18px;background:var(--shade);
+    border-left:3px solid var(--accent);
+  }
+  .tip h2{font-size:13px;letter-spacing:.09em;text-transform:uppercase;margin:0 0 6px;color:var(--accent)}
+  .tip p{margin:0;font-size:14px}
+
+  .leaflet-popup-content{font:400 14px/1.45 "Helvetica Neue",Arial,sans-serif;color:var(--ink)}
+  .leaflet-popup-content b{font-family:Georgia,serif;font-weight:400;font-size:16px}
+  .leaflet-popup-content a{color:var(--accent)}
+  .pin{
+    background:var(--ink);color:#fff;width:26px;height:26px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font:400 14px/1 Georgia,serif;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lunchafspraak Den Haag</h1>
+    <p class="lede">Parkeren, lunch en afspraak liggen op loopafstand van elkaar &mdash; &eacute;&eacute;n keer parkeren volstaat. Klik een stop aan om hem op de kaart te openen.</p>
+  </header>
+
+  <div class="layout">
+    <div id="map"></div>
+
+    <div>
+      <ol class="stops" id="stops">
+        <li tabindex="0" data-i="0">
+          <div class="num">1</div>
+          <div>
+            <div class="time">11:40</div>
+            <p class="place"><a href="https://maps.google.com/?cid=18071346732734043533" target="_blank" rel="noopener">Interparking WTC The Hague</a></p>
+            <p class="addr">Inrit Prinses Marijkestraat 5-7, 2595 AM Den Haag &middot; 24/7 open</p>
+            <p class="note">Ongeveer 10 minuten lopen naar het restaurant. <a href="https://www.interparking.nl/nl-NL/find-parking/WTCTheHague/" target="_blank" rel="noopener">interparking.nl</a></p>
+          </div>
+        </li>
+        <li tabindex="0" data-i="1">
+          <div class="num">2</div>
+          <div>
+            <div class="time">12:00</div>
+            <p class="place"><a href="https://maps.google.com/?cid=4860130463506784576" target="_blank" rel="noopener">Het Pleidooi</a></p>
+            <p class="addr">Adelheidstraat 87A, 2595 EC Den Haag &middot; 070 347 0965</p>
+            <p class="note">Lunch. Maandag t/m vrijdag open vanaf 11:00. <a href="http://www.hetpleidooi.nl/" target="_blank" rel="noopener">hetpleidooi.nl</a></p>
+          </div>
+        </li>
+        <li tabindex="0" data-i="2">
+          <div class="num">3</div>
+          <div>
+            <div class="time">Na de lunch</div>
+            <p class="place"><a href="https://maps.google.com/?cid=13441653238336171952" target="_blank" rel="noopener">WTC The Hague</a></p>
+            <p class="addr">Prinses Beatrixlaan 582, 2595 BM Den Haag &middot; toren E, verdieping 10</p>
+            <p class="note">Terugloop vanaf Het Pleidooi is ongeveer een kwartier.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="tip">
+        <h2>Parkeertip</h2>
+        <p>Op straat in Bezuidenhout betaal je aanzienlijk minder per uur dan in de Interparking-garage. Een plek vinden rond lunchtijd is alleen een gok.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  var stops = [
+    {n:1, lat:52.0801789, lng:4.3357919, name:"Interparking WTC The Hague",
+     line:"Inrit Prinses Marijkestraat 5-7", url:"https://maps.google.com/?cid=18071346732734043533"},
+    {n:2, lat:52.0829616, lng:4.3314020, name:"Het Pleidooi",
+     line:"Adelheidstraat 87A &middot; lunch 12:00", url:"https://maps.google.com/?cid=4860130463506784576"},
+    {n:3, lat:52.0789984, lng:4.3364440, name:"WTC The Hague",
+     line:"Pr. Beatrixlaan 582, toren E, verdieping 10", url:"https://maps.google.com/?cid=13441653238336171952"}
+  ];
+
+  var map = L.map('map', {scrollWheelZoom:false});
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom:19,
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-bijdragers'
+  }).addTo(map);
+
+  var markers = stops.map(function(s){
+    var icon = L.divIcon({html:'<div class="pin">'+s.n+'</div>', className:'', iconSize:[26,26], iconAnchor:[13,13]});
+    return L.marker([s.lat, s.lng], {icon:icon, title:s.name})
+      .addTo(map)
+      .bindPopup('<b>'+s.name+'</b><br>'+s.line+'<br><a href="'+s.url+'" target="_blank" rel="noopener">Openen in Google Maps</a>');
+  });
+
+  L.polyline([[stops[0].lat,stops[0].lng],[stops[1].lat,stops[1].lng],[stops[2].lat,stops[2].lng]],
+             {color:'#0F6E76', weight:2, opacity:.55, dashArray:'4 6'}).addTo(map);
+
+  map.fitBounds(L.latLngBounds(stops.map(function(s){return [s.lat,s.lng];})), {padding:[55,55]});
+
+  function open(i){ map.setView([stops[i].lat, stops[i].lng], 16); markers[i].openPopup(); }
+
+  Array.prototype.forEach.call(document.querySelectorAll('#stops li'), function(li){
+    li.addEventListener('click', function(e){
+      if(e.target.tagName === 'A') return;
+      open(parseInt(li.dataset.i,10));
+    });
+    li.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(parseInt(li.dataset.i,10)); }
+    });
+  });
+</script>
+</body>
+</html>
